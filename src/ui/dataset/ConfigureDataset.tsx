@@ -13,13 +13,17 @@ import Paper from "@mui/material/Paper";
 import InputFileButton from "../lib/input/InputFileButton";
 import Typography from "@mui/material/Typography";
 import DatasetMetadataTable from "./DatasetMetadataTable";
+import getCSV from "../../lib/csv/getCSV";
+import CSV from "../../lib/csv/CSV";
 
-const useFileContents = (file: File|undefined) => {
-  const [data, setData] = useState<string>('');
+type Row = Record<string, any>;
+
+const useCSV = (file: File|undefined) => {
+  const [data, setData] = useState<CSV<Row> | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState(null);
   useEffect(() => {
-    setData('');
+    setData(null);
     setError(null);
     if (file === undefined) {
       setLoading(false);
@@ -27,9 +31,9 @@ const useFileContents = (file: File|undefined) => {
     }
     setLoading(true);
     let cancelled = false;
-    file.text().then((contents: string) => {
+    getCSV<Row>(file).then((result) => {
       if (cancelled) return;
-      setData(contents)
+      setData(result)
     }, (error: any) => {
       if (cancelled) return;
       setError(error)
@@ -52,10 +56,11 @@ const useFileContents = (file: File|undefined) => {
 
 const ConfigureDataset = () => {
   const [dataset, setDataset] = useState<File|undefined>(undefined);
+
   const {
-    loading: loadingContents,
-    data: contents
-  } = useFileContents(dataset);
+    loading: loadingCSV,
+    data: csv
+  } = useCSV(dataset);
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setDataset(event.target.files?.[0]);
@@ -69,12 +74,14 @@ const ConfigureDataset = () => {
 	  {text}
 	</Button>
       </InputFileButton>
-      {dataset === undefined ? null : 
-	<DatasetMetadataTable file={dataset}/>
+      {dataset === undefined ? null :
+	<>
+	  <DatasetMetadataTable file={dataset}/>
+	  <pre>
+	    {loadingCSV ? 'loading...' : JSON.stringify(csv, undefined, 2)}
+	  </pre>
+	</>
       }
-      <pre>
-	{loadingContents ? 'loading...' : contents}
-      </pre>
     </>
   )
 }
