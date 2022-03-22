@@ -1,9 +1,7 @@
-import type { GatsbyConfig } from "gatsby";
-
-const config: GatsbyConfig = {
+const config = {
   siteMetadata: {
-    title: ``,
-    siteUrl: `https://www.yourdomain.tld`
+    title: `AMD UI`,
+    siteUrl: `https://pharmpy.github.io/amdui`
   },
   plugins: ["gatsby-plugin-emotion", "gatsby-plugin-image", "gatsby-plugin-react-helmet", "gatsby-plugin-sitemap", {
     resolve: 'gatsby-plugin-manifest',
@@ -24,7 +22,12 @@ const config: GatsbyConfig = {
       "path": "./src/pages/"
     },
     __key: "pages"
+  }, {
+    resolve: `gatsby-plugin-layout`,
+    options: {
+      component: require.resolve(`./src/layouts/default.tsx`),
+    },
   }]
 };
 
-export default config;
+module.exports = config;
