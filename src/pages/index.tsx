@@ -1,10 +1,15 @@
 import React from "react"
 
-import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import ConfigureDataset from "../ui/dataset/ConfigureDataset";
 
 const IndexPage = () => {
   return (
-    <Typography variant="h1">Hello world</Typography>
+    <Grid container spacing={2} padding={2}>
+      <Grid item xs={6}>
+        <ConfigureDataset/>
+      </Grid>
+    </Grid>
   );
 }
 
