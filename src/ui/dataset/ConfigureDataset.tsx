@@ -15,6 +15,8 @@ import Typography from "@mui/material/Typography";
 import DatasetMetadataTable from "./DatasetMetadataTable";
 import getCSV from "../../lib/csv/getCSV";
 import CSV from "../../lib/csv/CSV";
+import Grid from "@mui/material/Grid";
+import DatasetColumnConfiguration from "./DatasetColumnConfiguration";
 
 type Row = Record<string, any>;
 
@@ -68,21 +70,32 @@ const ConfigureDataset = () => {
 
   const text = `Choose dataset${dataset === undefined ? '' : ` (current: ${dataset.name})`}`;
   return (
-    <>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
       <InputFileButton onChange={onChange}>
 	<Button variant="contained" component="span" startIcon={<DataArrayIcon/>}>
 	  {text}
 	</Button>
       </InputFileButton>
+      </Grid>
       {dataset === undefined ? null :
-	<>
+	<Grid item xs={12}>
 	  <DatasetMetadataTable file={dataset}/>
-	  <pre>
-	    {loadingCSV ? 'loading...' : JSON.stringify(csv, undefined, 2)}
-	  </pre>
-	</>
+	</Grid>
       }
-    </>
+      {csv === null ? null :
+	  <Grid item xs={12}>
+	    <DatasetColumnConfiguration columns={csv.meta.fields ?? []}/>
+	  </Grid>
+      }
+      {dataset === undefined ? null :
+	  <Grid item xs={12}>
+	    <pre>
+	      {loadingCSV ? 'loading...' : JSON.stringify(csv, undefined, 2)}
+	    </pre>
+	  </Grid>
+      }
+      </Grid>
   )
 }
 
