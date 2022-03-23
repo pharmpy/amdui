@@ -18,7 +18,7 @@ jobs:
           useRollingCache: true
 
       - name: Build 🏗️
-        run: yarn build
+        run: yarn build --prefix-paths
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.2.5

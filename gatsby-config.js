@@ -1,4 +1,5 @@
 const config = {
+  pathPrefix: "/amdui",
   siteMetadata: {
     title: `AMD UI`,
     siteUrl: `https://pharmpy.github.io/amdui`
