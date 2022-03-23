@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 
-const tsc = (paths) => {
+const tc = (paths) => {
 	const encoding = 'utf8';
 	const originalTSConfigPath = 'tsconfig.json';
 	// NOTE: MUST be in same directory.
@@ -23,6 +23,6 @@ const lintConfig = 'yarn lint-config-and-fix';
 
 module.exports = {
 	'*.{js,jsx}': [lint],
-	'*.{ts,tsx}': [lint, tsc],
+	'*.{ts,tsx}': [lint, tc],
 	'package.json': [lintConfig],
 };
