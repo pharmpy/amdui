@@ -27,7 +27,7 @@
     "serve": "gatsby serve",
     "tc": "tsc --noEmit",
     "tc:watch": "yarn tsc --noErrorTruncation --watch",
-    "upgrade": "ncu -u"
+    "up": "ncu -u"
   },
   "dependencies": {
     "@emotion/react": "^11.8.2",
