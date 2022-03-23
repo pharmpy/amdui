@@ -1,22 +1,16 @@
 import React, {ChangeEventHandler, useEffect, useState} from "react";
 
-import {styled} from "@mui/material/styles";
-
 import Button from "@mui/material/Button";
 import DataArrayIcon from '@mui/icons-material/DataArray';
+import SaveIcon from '@mui/icons-material/Save';
 
-const Input = styled('input')({
-  display: 'none',
-});
-
-import Paper from "@mui/material/Paper";
 import InputFileButton from "../lib/input/InputFileButton";
-import Typography from "@mui/material/Typography";
 import DatasetMetadataTable from "./DatasetMetadataTable";
 import getCSV from "../../lib/csv/getCSV";
 import CSV from "../../lib/csv/CSV";
 import Grid from "@mui/material/Grid";
 import DatasetColumnConfiguration from "./DatasetColumnConfiguration";
+import saveTextAs from "../../lib/text/saveTextAs";
 
 type Row = Record<string, any>;
 
@@ -69,14 +63,28 @@ const ConfigureDataset = () => {
   };
 
   const text = `Choose dataset${dataset === undefined ? '' : ` (current: ${dataset.name})`}`;
+  const save = () => {
+    if (!dataset) return;
+    const text = JSON.stringify({
+      'a': 1,
+      'b': 1,
+      'c': 1,
+    }, undefined, 2);
+    saveTextAs(text, dataset.name.replace(/\.[^.]+/, '.datainfo'));
+  };
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12}>
+      <Grid item xs={6}>
       <InputFileButton onChange={onChange}>
 	<Button variant="contained" component="span" startIcon={<DataArrayIcon/>}>
 	  {text}
 	</Button>
       </InputFileButton>
+      </Grid>
+      <Grid item xs={6}>
+	<Button variant="contained" startIcon={<SaveIcon/>} disabled={!dataset} onClick={save}>
+	  Save
+	</Button>
       </Grid>
       {dataset === undefined ? null :
 	<Grid item xs={12}>
