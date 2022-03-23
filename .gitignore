@@ -2,4 +2,8 @@
 
 node_modules/
 .cache/
-public
+/public
+
+/tsconfig.tsbuildinfo
+/lint-staged.tsconfig.json
+/lint-staged.tsconfig.tsbuildinfo

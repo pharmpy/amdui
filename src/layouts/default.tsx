@@ -12,15 +12,15 @@ import useTheme from '../ui/useTheme';
 import Header from '../ui/Header';
 import Main from '../ui/Main';
 
-const Layout = (props: any) => {
+function Layout(props: any) {
 	const theme = useTheme();
 	return (
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
-			<Header/>
-			<Main {...props}/>
+			<Header />
+			<Main {...props} />
 		</ThemeProvider>
-	)
-};
+	);
+}
 
 export default Layout;

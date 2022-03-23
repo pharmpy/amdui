@@ -1,12 +1,11 @@
-import React, {ChangeEventHandler, useState} from "react";
+import React, {ChangeEventHandler} from 'react';
 
-import {styled} from "@mui/material/styles";
+import {styled} from '@mui/material/styles';
 
-import Button from "@mui/material/Button";
-import useId from "@mui/material/utils/useId";
+import useId from '@mui/material/utils/useId';
 
 const Input = styled('input')({
-  display: 'none',
+	display: 'none',
 });
 
 interface InputFileButtonProps {
@@ -14,21 +13,14 @@ interface InputFileButtonProps {
 	children: React.ReactNode;
 }
 
-const InputFileButton = ({onChange, children}: InputFileButtonProps) => {
+function InputFileButton({onChange, children}: InputFileButtonProps) {
 	const inputId = useId();
 	return (
-		<>
-		  <label htmlFor={inputId}>
-			  <Input
-				accept="text/csv"
-				id={inputId}
-				type="file"
-				onChange={onChange}
-			  />
-			  {children}
-		  </label>
-		</>
-)
-};
+		<label htmlFor={inputId}>
+			<Input accept="text/csv" id={inputId} type="file" onChange={onChange} />
+			{children}
+		</label>
+	);
+}
 
 export default InputFileButton;

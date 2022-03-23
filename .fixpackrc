@@ -1,0 +1,55 @@
+{
+  "files": [
+    "package.json"
+  ],
+  "quiet": false,
+  "required": [
+    "name",
+    "version"
+  ],
+  "requiredOnPrivate": [],
+  "sortToTop": [
+    "name",
+    "description",
+    "version",
+    "license",
+    "author",
+    "homepage",
+    "repository",
+    "bugs",
+    "sideEffects",
+    "type",
+    "source",
+    "scripts",
+    "bundledDependencies",
+    "dependencies",
+    "optionalDependencies",
+    "peerDependencies",
+    "peerDependenciesMeta",
+    "devDependencies"
+  ],
+  "sortedSubItems": [
+    "exports",
+    "files",
+    "scripts",
+    "bundledDependencies",
+    "dependencies",
+    "optionalDependencies",
+    "peerDependencies",
+    "peerDependenciesMeta",
+    "devDependencies"
+  ],
+  "warn": [
+    "description",
+    "author",
+    "repository",
+    "bugs",
+    "homepage",
+    "license"
+  ],
+  "dryRun": false,
+  "wipe": false,
+  "indent": null,
+  "newLine": null,
+  "finalNewLine": null
+}

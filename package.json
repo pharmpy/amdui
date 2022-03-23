@@ -1,17 +1,33 @@
 {
   "name": "amd-ui",
-  "version": "0.0.0",
   "description": "amd-ui",
+  "version": "0.0.0",
+  "license": "BSD-2-CLAUSE",
   "author": "pharmpy-dev-123",
-  "keywords": [
-    "gatsby"
-  ],
+  "homepage": "https://pharmpy.github.io/amdui",
+  "repository": {
+    "url": "https://github.com/pharmpy/amdui",
+    "type": "git"
+  },
+  "bugs": {
+    "url": "https://github.com/pharmpy/amdui/issues"
+  },
   "scripts": {
-    "dev": "gatsby develop",
     "build": "gatsby build",
-    "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "typecheck": "tsc --noEmit"
+    "cu": "ncu",
+    "dev": "gatsby develop",
+    "install-hooks": "husky install",
+    "lint": "xo",
+    "lint-and-fix": "yarn lint --fix",
+    "lint-config": "fixpack --dryRun",
+    "lint-config-and-fix": "fixpack || fixpack",
+    "postinstall": "yarn install-hooks",
+    "precommit": "lint-staged",
+    "serve": "gatsby serve",
+    "tc": "tsc --noEmit",
+    "tc:watch": "yarn tsc --noErrorTruncation --watch",
+    "upgrade": "ncu -u"
   },
   "dependencies": {
     "@emotion/react": "^11.8.2",
@@ -39,11 +55,49 @@
     "react-helmet": "^6.1.0"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.17.0",
     "@types/file-saver": "^2.0.5",
     "@types/node": "^17.0.21",
     "@types/papaparse": "^5.3.2",
     "@types/react": "^17.0.41",
     "@types/react-dom": "^17.0.14",
-    "typescript": "^4.6.2"
+    "eslint-config-xo-react": "^0.27.0",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "fixpack": "^4.0.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
+    "npm-check-updates": "^12.5.4",
+    "typescript": "^4.6.2",
+    "xo": "^0.48.0"
+  },
+  "babel": {},
+  "prettier": {
+    "trailingComma": "all"
+  },
+  "xo": {
+    "parser": "@babel/eslint-parser",
+    "extends": "xo-react",
+    "prettier": true,
+    "plugins": [
+      "unicorn"
+    ],
+    "rules": {
+      "unicorn/filename-case": "off",
+      "import/extensions": "off",
+      "node/prefer-global/process": "off"
+    },
+    "overrides": [
+      {
+        "files": [
+          "gatsby-config.js",
+          "lint-staged.config.js"
+        ],
+        "rules": {
+          "unicorn/prefer-module": "off",
+          "unicorn/prefer-json-parse-buffer": "off"
+        }
+      }
+    ]
   }
 }

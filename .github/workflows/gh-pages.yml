@@ -14,7 +14,7 @@ jobs:
       - name: Install 📦
         uses: bahmutov/npm-install@v1
         with:
-          install-command: yarn --frozen-lockfile
+          install-command: yarn --frozen-lockfile --ignore-scripts
           useRollingCache: true
 
       - name: Build 🏗️

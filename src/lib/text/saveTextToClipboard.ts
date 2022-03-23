@@ -1,17 +1,17 @@
 const saveTextToClipboardLegacy = async (text: string): Promise<void> => {
-	const el = document.createElement('textarea');
-	el.value = text;
-	el.setAttribute('readonly', '');
-	el.style.position = 'absolute';
-	el.style.display = 'block';
-	el.style.width = '0';
-	el.style.height = '0';
-	el.style.left = '-9999px';
-	document.body.append(el);
-	el.select();
+	const element = document.createElement('textarea');
+	element.value = text;
+	element.setAttribute('readonly', '');
+	element.style.position = 'absolute';
+	element.style.display = 'block';
+	element.style.width = '0';
+	element.style.height = '0';
+	element.style.left = '-9999px';
+	document.body.append(element);
+	element.select();
 	document.execCommand('copy');
-	el.remove();
-	return Promise.resolve(undefined);
+	element.remove();
+	return undefined;
 };
 
 const saveTextToClipboardModern = async (text: string): Promise<void> => {
