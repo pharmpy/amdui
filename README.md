@@ -15,3 +15,11 @@ Tools (client-side only, no backend):
 # Served at http://localhost:8000
 yarn dev
 ```
+
+## :wrench: Setup `dev` environment
+
+Install [`node`](https://github.com/nodejs/node),
+[`npm`](https://github.com/npm/cli), and
+[`yarn`](https://github.com/yarnpkg/berry).
+
+> Note that `npm` is included in most distributions of `node`.
