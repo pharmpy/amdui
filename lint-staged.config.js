@@ -19,7 +19,10 @@ const tsc = (paths) => {
 };
 
 const lint = 'yarn lint-and-fix';
+const lintConfig = 'yarn lint-config-and-fix';
 
 module.exports = {
-	'*.{js,jsx,ts,tsx}': [lint, tsc],
+	'*.{js,jsx}': [lint],
+	'*.{ts,tsx}': [lint, tsc],
+	'package.json': [lintConfig],
 };
