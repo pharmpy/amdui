@@ -16,8 +16,13 @@ yarn dev
 
 ## :wrench: Setup `dev` environment
 
-Install [`node`](https://github.com/nodejs/node),
-[`npm`](https://github.com/npm/cli), and
-[`yarn`](https://github.com/yarnpkg/berry).
+Install [`node`](https://github.com/nodejs/node) `v16` or higher,
+[`npm`](https://github.com/npm/cli) `v8` or higher, and
+[`yarn`](https://classic.yarnpkg.com) `v1`.
 
-> Note that `npm` is included in most distributions of `node`.
+> :warning: Note that `npm` is included in most distributions of `node`.
+
+```shell
+# Install dependencies and setup git hooks
+yarn
+```
