@@ -1,6 +1,4 @@
-<h1 align="center">
-  AMD UI - [demo](https://pharmpy.github.io/amdui)
-</h1>
+# AMD UI - [demo](https://pharmpy.github.io/amdui)
 
 Tools (client-side only, no backend):
   - [Gatsby](https://www.gatsbyjs.com)
