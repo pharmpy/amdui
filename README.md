@@ -1,5 +1,5 @@
 <h1 align="center">
-  AMD UI
+  AMD UI - [demo](https://pharmpy.github.io/amdui)
 </h1>
 
 Tools (client-side only, no backend):
