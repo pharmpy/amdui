@@ -9,10 +9,12 @@ import InputFileButton from '../lib/input/InputFileButton';
 import getCSV from '../../lib/csv/getCSV';
 import CSV from '../../lib/csv/CSV';
 import saveTextAs from '../../lib/text/saveTextAs';
-import DatasetColumnConfiguration from './DatasetColumnConfiguration';
+import FileMetadataTable from './FileMetadataTable';
 import DatasetMetadataTable from './DatasetMetadataTable';
-
-type Row = Record<string, any>;
+import DatasetColumnConfiguration from './DatasetColumnConfiguration';
+import DatasetErrorsTable from './DatasetErrorsTable';
+import DatasetDataTable from './DatasetDataTable';
+import Row from './Row';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const useCSV = (file: File | undefined) => {
@@ -57,8 +59,7 @@ const useCSV = (file: File | undefined) => {
 function ConfigureDataset() {
 	const [dataset, setDataset] = useState<File | undefined>(undefined);
 
-	// eslint-disable-next-line @typescript-eslint/naming-convention
-	const {loading: loadingCSV, data: csv} = useCSV(dataset);
+	const {data: csv} = useCSV(dataset);
 
 	const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
 		setDataset(event.target.files?.[0]);
@@ -84,7 +85,7 @@ function ConfigureDataset() {
 	return (
 		<Grid container spacing={2}>
 			<Grid item xs={6}>
-				<InputFileButton onChange={onChange}>
+				<InputFileButton accept="text/csv" onChange={onChange}>
 					<Button
 						variant="contained"
 						component="span"
@@ -104,21 +105,29 @@ function ConfigureDataset() {
 					Save
 				</Button>
 			</Grid>
-			{dataset === undefined ? null : (
-				<Grid item xs={12}>
-					<DatasetMetadataTable file={dataset} />
-				</Grid>
-			)}
 			{csv === undefined ? null : (
 				<Grid item xs={12}>
 					<DatasetColumnConfiguration columns={csv.meta.fields ?? []} />
 				</Grid>
 			)}
+			{csv === undefined ? null : (
+				<Grid item xs={12}>
+					<DatasetErrorsTable errors={csv.errors} />
+				</Grid>
+			)}
 			{dataset === undefined ? null : (
 				<Grid item xs={12}>
-					<pre>
-						{loadingCSV ? 'loading...' : JSON.stringify(csv, undefined, 2)}
-					</pre>
+					<FileMetadataTable file={dataset} />
+				</Grid>
+			)}
+			{csv === undefined ? null : (
+				<Grid item xs={12}>
+					<DatasetMetadataTable meta={csv.meta} />
+				</Grid>
+			)}
+			{csv === undefined ? null : (
+				<Grid item xs={12}>
+					<DatasetDataTable data={csv.data} />
 				</Grid>
 			)}
 		</Grid>

@@ -9,15 +9,16 @@ const Input = styled('input')({
 });
 
 interface InputFileButtonProps {
+	accept?: string;
 	onChange: ChangeEventHandler<HTMLInputElement>;
 	children: React.ReactNode;
 }
 
-function InputFileButton({onChange, children}: InputFileButtonProps) {
+function InputFileButton({accept, onChange, children}: InputFileButtonProps) {
 	const inputId = useId();
 	return (
 		<label htmlFor={inputId}>
-			<Input accept="text/csv" id={inputId} type="file" onChange={onChange} />
+			<Input accept={accept} id={inputId} type="file" onChange={onChange} />
 			{children}
 		</label>
 	);
