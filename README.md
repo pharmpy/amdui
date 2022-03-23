@@ -4,7 +4,7 @@ Tools (client-side only, no backend):
   - [Gatsby](https://www.gatsbyjs.com)
   - [TypeScript](https://www.typescriptlang.org)
   - [React](https://reactjs.org)
-  - [Emotion](https://emotion.sh/docs/introduction)
+  - [Emotion](https://emotion.sh)
   - [MUI](https://mui.com)
 
 ## :woman_technologist: Develop
