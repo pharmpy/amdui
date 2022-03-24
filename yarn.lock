@@ -6766,17 +6766,6 @@ gatsby-plugin-layout@^3.10.0:
   dependencies:
     "@babel/runtime" "^7.15.4"
 
-gatsby-plugin-manifest@^4.10.2:
-  version "4.10.2"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-manifest/-/gatsby-plugin-manifest-4.10.2.tgz#117b44e0e219fa85d6b710d2ed985268d82a1e25"
-  integrity sha512-2QGrG3qFkUnp0IcxQ+uQS4/jPL4NMHShOEs/7JPsuIJSIdumnG7QYJ9xHbIBb8U5mIFLpeonADYJVbdTsnGtrg==
-  dependencies:
-    "@babel/runtime" "^7.15.4"
-    gatsby-core-utils "^3.10.1"
-    gatsby-plugin-utils "^3.4.2"
-    semver "^7.3.5"
-    sharp "^0.30.1"
-
 gatsby-plugin-mdx@^3.10.2:
   version "3.10.2"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-mdx/-/gatsby-plugin-mdx-3.10.2.tgz#e8f0a071d855b7d0550bdc33c0b89e8d9f094009"
