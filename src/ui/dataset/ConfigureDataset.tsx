@@ -1,9 +1,12 @@
 import React, {ChangeEventHandler, useEffect, useState} from 'react';
 
-import Button from '@mui/material/Button';
-import DataArrayIcon from '@mui/icons-material/DataArray';
-
 import Grid from '@mui/material/Grid';
+import Fab from '@mui/material/Fab';
+
+import DataArrayIcon from '@mui/icons-material/DataArray';
+import SaveIcon from '@mui/icons-material/Save';
+
+import Typography from '@mui/material/Typography';
 import InputFileButton from '../lib/input/InputFileButton';
 import getCSV from '../../lib/csv/getCSV';
 import CSV from '../../lib/csv/CSV';
@@ -14,7 +17,8 @@ import DatasetErrorsTable from './DatasetErrorsTable';
 import DatasetDataTable from './DatasetDataTable';
 import Row from './Row';
 import Provider from './Provider';
-import SaveDataInfoButton from './SaveDataInfoButton';
+import useSave from './useSave';
+import useDataInfo from './useDataInfo';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const useCSV = (file: File | undefined) => {
@@ -56,41 +60,43 @@ const useCSV = (file: File | undefined) => {
 	};
 };
 
-function ConfigureDataset() {
-	const [dataset, setDataset] = useState<File | undefined>(undefined);
+interface ConfigureDatasetConsumerProps {
+	dataset?: File;
+	csv?: CSV<Row>;
+	columns: string[];
+}
 
-	const {data: csv} = useCSV(dataset);
-
-	const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-		setDataset(event.target.files?.[0]);
-	};
-
-	const text = `Choose dataset${
-		dataset === undefined ? '' : ` (current: ${dataset.name})`
-	}`;
-
-	const columns = csv?.meta.fields ?? [];
+function ConfigureDatasetConsumer({
+	dataset,
+	csv,
+	columns,
+}: ConfigureDatasetConsumerProps) {
+	const [state] = useDataInfo();
+	const save = useSave(
+		state,
+		dataset?.name.replace(/\.[^.]+/, '.datainfo') ?? 'data.datainfo',
+	);
 
 	return (
-		<Provider columns={columns}>
-			<Grid container spacing={2}>
-				<Grid item xs={6}>
-					<InputFileButton accept="text/csv" onChange={onChange}>
-						<Button
-							variant="contained"
-							component="span"
-							startIcon={<DataArrayIcon />}
-						>
-							{text}
-						</Button>
-					</InputFileButton>
-				</Grid>
-				<Grid item xs={6}>
-					<SaveDataInfoButton
-						filename={dataset?.name.replace(/\.[^.]+/, '.datainfo')}
-					/>
-				</Grid>
-				{csv === undefined ? null : (
+		<>
+			<Fab
+				sx={{position: 'fixed', bottom: 16, right: 16}}
+				disabled={state.size === 0}
+				onClick={save}
+			>
+				<SaveIcon />
+			</Fab>
+			<Grid container spacing={3}>
+				{dataset === undefined ? null : (
+					<Grid item xs={12}>
+						<Typography variant="h3">{dataset.name}</Typography>
+					</Grid>
+				)}
+				{csv === undefined ? (
+					<Grid item xs={12}>
+						<Typography variant="h6">loading...</Typography>
+					</Grid>
+				) : (
 					<Grid item xs={12}>
 						<DatasetColumnConfiguration columns={columns} />
 					</Grid>
@@ -116,7 +122,45 @@ function ConfigureDataset() {
 					</Grid>
 				)}
 			</Grid>
-		</Provider>
+		</>
+	);
+}
+
+function ConfigureDataset() {
+	const [dataset, setDataset] = useState<File | undefined>(undefined);
+
+	const {data: csv} = useCSV(dataset);
+
+	const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+		setDataset(event.target.files?.[0]);
+	};
+
+	const text = `Choose dataset${
+		dataset === undefined ? '' : ` (current: ${dataset.name})`
+	}`;
+
+	const columns = csv?.meta.fields ?? [];
+
+	return (
+		<>
+			<InputFileButton accept="text/csv" onChange={onChange}>
+				<Fab
+					variant="extended"
+					component="span"
+					sx={{position: 'fixed', bottom: 19, right: 84}}
+				>
+					<DataArrayIcon sx={{mr: 1}} />
+					{text}
+				</Fab>
+			</InputFileButton>
+			<Provider columns={columns}>
+				<ConfigureDatasetConsumer
+					dataset={dataset}
+					columns={columns}
+					csv={csv}
+				/>
+			</Provider>
+		</>
 	);
 }
 
