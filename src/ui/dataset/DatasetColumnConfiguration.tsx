@@ -113,7 +113,10 @@ function DatasetColumnConfiguration({
 										<Checkbox
 											checked={!config.drop}
 											onClick={() => {
-												dispatch(column, 'drop')(!config.drop);
+												dispatch(
+													column,
+													'drop',
+												)(config.drop ? undefined : true);
 											}}
 										/>
 									</TableCell>
@@ -145,9 +148,15 @@ function DatasetColumnConfiguration({
 										<SelectOneInput
 											label="Nature"
 											options={nature}
-											value={config.continuous ? 'continuous' : 'discrete'}
+											value={
+												// eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
+												config.continuous === false ? 'discrete' : 'continuous'
+											}
 											onChange={(value: Nature) => {
-												dispatch(column, 'continuous')(value === 'continuous');
+												dispatch(
+													column,
+													'continuous',
+												)(value === 'continuous' ? undefined : false);
 											}}
 										/>
 									</TableCell>
