@@ -26,7 +26,7 @@
     "precommit": "lint-staged",
     "serve": "gatsby serve",
     "tc": "tsc --noEmit",
-    "tc:watch": "yarn tsc --noErrorTruncation --watch",
+    "tc:watch": "yarn tc --noErrorTruncation --watch",
     "up": "ncu -u"
   },
   "dependencies": {
