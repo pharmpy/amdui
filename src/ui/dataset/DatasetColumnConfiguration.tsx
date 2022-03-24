@@ -88,21 +88,17 @@ function DatasetColumnConfiguration({
 				</TableHead>
 				<TableBody>
 					{columns
-						.slice()
-						.sort((a, b) => {
-							if (state.get(a)?.drop) {
-								return state.get(b)?.drop
-									? columns.indexOf(a) - columns.indexOf(b)
-									: 1;
-							}
-
-							if (state.get(b)?.drop) {
-								return -1;
-							}
-
-							return columns.indexOf(a) - columns.indexOf(b);
+						.map((_column, i) => i)
+						.sort((i, j) => {
+							const a = columns[i];
+							const partitionA = state.get(a)?.drop ? 1 : 0;
+							const b = columns[j];
+							const partitionB = state.get(b)?.drop ? 1 : 0;
+							const diff = partitionA - partitionB;
+							return diff === 0 ? i - j : diff;
 						})
-						.map((column) => {
+						.map((i) => {
+							const column = columns[i];
 							const config = state.get(column);
 							console.debug({state, config});
 							if (config === undefined) return null;
