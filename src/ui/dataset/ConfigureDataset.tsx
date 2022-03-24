@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import InputFileButton from '../lib/input/InputFileButton';
 import getCSV from '../../lib/csv/getCSV';
 import CSV from '../../lib/csv/CSV';
-import saveTextAs from '../../lib/text/saveTextAs';
+import saveTextAs from '../lib/output/saveTextAs';
 import FileMetadataTable from './FileMetadataTable';
 import DatasetMetadataTable from './DatasetMetadataTable';
 import DatasetColumnConfiguration from './DatasetColumnConfiguration';
