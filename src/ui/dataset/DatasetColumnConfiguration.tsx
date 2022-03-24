@@ -74,8 +74,8 @@ function DatasetColumnConfiguration({
 			<Table>
 				<TableHead>
 					<TableRow>
-						<TableCell>Selection</TableCell>
 						<TableCell>Column</TableCell>
+						<TableCell>Selection</TableCell>
 						<TableCell>Type</TableCell>
 						<TableCell>Unit</TableCell>
 						<TableCell>Scale</TableCell>
@@ -106,6 +106,7 @@ function DatasetColumnConfiguration({
 							if (config === undefined) return null;
 							return (
 								<TableRow key={column}>
+									<TableCell>{column}</TableCell>
 									<TableCell>
 										<Checkbox
 											checked={!config.drop}
@@ -114,7 +115,6 @@ function DatasetColumnConfiguration({
 											}}
 										/>
 									</TableCell>
-									<TableCell>{column}</TableCell>
 									<TableCell>
 										<SelectOneInput
 											label="Type"
