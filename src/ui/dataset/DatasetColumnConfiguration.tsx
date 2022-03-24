@@ -100,7 +100,6 @@ function DatasetColumnConfiguration({
 						.map((i) => {
 							const column = columns[i];
 							const config = state.get(column);
-							console.debug({state, config});
 							if (config === undefined) return null;
 							return (
 								<TableRow key={column}>
