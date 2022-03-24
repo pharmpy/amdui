@@ -13,6 +13,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
+import TextField from '@mui/material/TextField';
 import {
 	descriptors,
 	dtypes,
@@ -82,6 +83,7 @@ function DatasetColumnConfiguration({
 						<TableCell>Nature</TableCell>
 						<TableCell>Data Type</TableCell>
 						<TableCell>Descriptor</TableCell>
+						<TableCell>Categories</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
@@ -163,6 +165,27 @@ function DatasetColumnConfiguration({
 											options={descriptors}
 											value={config.descriptor ?? 'unknown'}
 											onChange={dispatch(column, 'descriptor')}
+										/>
+									</TableCell>
+									<TableCell>
+										<TextField
+											label="Categories"
+											inputProps={{inputMode: 'numeric'}}
+											value={config.categories?.length.toString() ?? ''}
+											onChange={(event) => {
+												const ncategories = Math.min(
+													Number.parseInt(event.target.value, 10) || 0,
+													200,
+												);
+												if (ncategories === 0) {
+													dispatch(column, 'categories')(undefined);
+												} else {
+													const categories = [0];
+													for (let i = 1; i < ncategories; ++i)
+														categories.push(i);
+													dispatch(column, 'categories')(categories);
+												}
+											}}
 										/>
 									</TableCell>
 								</TableRow>

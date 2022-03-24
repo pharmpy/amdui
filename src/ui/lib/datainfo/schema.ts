@@ -7,6 +7,7 @@ export type Column = {
 	datatype: DataType;
 	descriptor?: Descriptor;
 	drop?: boolean;
+	categories?: number[];
 };
 
 export const types = [
