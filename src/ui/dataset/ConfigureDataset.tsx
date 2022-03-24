@@ -92,7 +92,7 @@ function ConfigureDatasetConsumer({
 						<Typography variant="h3">{dataset.name}</Typography>
 					</Grid>
 				)}
-				{csv === undefined ? (
+				{dataset === undefined ? null : csv === undefined ? (
 					<Grid item xs={12}>
 						<Typography variant="h6">loading...</Typography>
 					</Grid>
