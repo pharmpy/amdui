@@ -2,19 +2,19 @@ import React, {ChangeEventHandler, useEffect, useState} from 'react';
 
 import Button from '@mui/material/Button';
 import DataArrayIcon from '@mui/icons-material/DataArray';
-import SaveIcon from '@mui/icons-material/Save';
 
 import Grid from '@mui/material/Grid';
 import InputFileButton from '../lib/input/InputFileButton';
 import getCSV from '../../lib/csv/getCSV';
 import CSV from '../../lib/csv/CSV';
-import saveTextAs from '../lib/output/saveTextAs';
 import FileMetadataTable from './FileMetadataTable';
 import DatasetMetadataTable from './DatasetMetadataTable';
 import DatasetColumnConfiguration from './DatasetColumnConfiguration';
 import DatasetErrorsTable from './DatasetErrorsTable';
 import DatasetDataTable from './DatasetDataTable';
 import Row from './Row';
+import Provider from './Provider';
+import SaveDataInfoButton from './SaveDataInfoButton';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const useCSV = (file: File | undefined) => {
@@ -68,69 +68,55 @@ function ConfigureDataset() {
 	const text = `Choose dataset${
 		dataset === undefined ? '' : ` (current: ${dataset.name})`
 	}`;
-	const save = () => {
-		if (!dataset) return;
-		const text = JSON.stringify(
-			{
-				a: 1,
-				b: 1,
-				c: 1,
-			},
-			undefined,
-			2,
-		);
-		saveTextAs(text, dataset.name.replace(/\.[^.]+/, '.datainfo'));
-	};
+
+	const columns = csv?.meta.fields ?? [];
 
 	return (
-		<Grid container spacing={2}>
-			<Grid item xs={6}>
-				<InputFileButton accept="text/csv" onChange={onChange}>
-					<Button
-						variant="contained"
-						component="span"
-						startIcon={<DataArrayIcon />}
-					>
-						{text}
-					</Button>
-				</InputFileButton>
+		<Provider columns={columns}>
+			<Grid container spacing={2}>
+				<Grid item xs={6}>
+					<InputFileButton accept="text/csv" onChange={onChange}>
+						<Button
+							variant="contained"
+							component="span"
+							startIcon={<DataArrayIcon />}
+						>
+							{text}
+						</Button>
+					</InputFileButton>
+				</Grid>
+				<Grid item xs={6}>
+					<SaveDataInfoButton
+						filename={dataset?.name.replace(/\.[^.]+/, '.datainfo')}
+					/>
+				</Grid>
+				{csv === undefined ? null : (
+					<Grid item xs={12}>
+						<DatasetColumnConfiguration columns={columns} />
+					</Grid>
+				)}
+				{csv === undefined ? null : (
+					<Grid item xs={12}>
+						<DatasetErrorsTable errors={csv.errors} />
+					</Grid>
+				)}
+				{dataset === undefined ? null : (
+					<Grid item xs={12}>
+						<FileMetadataTable file={dataset} />
+					</Grid>
+				)}
+				{csv === undefined ? null : (
+					<Grid item xs={12}>
+						<DatasetMetadataTable meta={csv.meta} />
+					</Grid>
+				)}
+				{csv === undefined ? null : (
+					<Grid item xs={12}>
+						<DatasetDataTable data={csv.data} />
+					</Grid>
+				)}
 			</Grid>
-			<Grid item xs={6}>
-				<Button
-					variant="contained"
-					startIcon={<SaveIcon />}
-					disabled={!dataset}
-					onClick={save}
-				>
-					Save
-				</Button>
-			</Grid>
-			{csv === undefined ? null : (
-				<Grid item xs={12}>
-					<DatasetColumnConfiguration columns={csv.meta.fields ?? []} />
-				</Grid>
-			)}
-			{csv === undefined ? null : (
-				<Grid item xs={12}>
-					<DatasetErrorsTable errors={csv.errors} />
-				</Grid>
-			)}
-			{dataset === undefined ? null : (
-				<Grid item xs={12}>
-					<FileMetadataTable file={dataset} />
-				</Grid>
-			)}
-			{csv === undefined ? null : (
-				<Grid item xs={12}>
-					<DatasetMetadataTable meta={csv.meta} />
-				</Grid>
-			)}
-			{csv === undefined ? null : (
-				<Grid item xs={12}>
-					<DatasetDataTable data={csv.data} />
-				</Grid>
-			)}
-		</Grid>
+		</Provider>
 	);
 }
 

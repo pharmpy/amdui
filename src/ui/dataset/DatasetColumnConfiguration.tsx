@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import useId from '@mui/material/utils/useId';
 
 import FormControl from '@mui/material/FormControl';
@@ -12,58 +12,52 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import Checkbox from '@mui/material/Checkbox';
+import {
+	descriptors,
+	dtypes,
+	Nature,
+	nature,
+	scales,
+	types,
+	units,
+} from '../lib/datainfo/schema';
+import useDataInfo from './useDataInfo';
 
 interface DatasetColumnConfigurationProps {
 	columns: string[];
 }
 
-const kinds = [
-	'id',
-	'idv',
-	'dose',
-	'dv',
-	'occasion',
-	'covariate - categorical',
-	'covariate - continuous',
-];
-
-const bestGuess = (column: string): string => {
-	const slug = column.toLowerCase();
-	if (slug === 'id') return 'id';
-	if (slug === 'time') return 'idv';
-	if (slug === 'amt') return 'dose';
-	if (slug.startsWith('dv')) return 'dv';
-	if (slug === 'visit') return 'occasion';
-	if (slug === 'apgr') return 'covariate - categorical';
-	if (slug === 'sex') return 'covariate - categorical';
-	if (slug === 'wgt') return 'covariate - continuous';
-	if (slug === 'bmi') return 'covariate - continuous';
-	return 'covariate - continuous';
-};
-
-interface ColumnKindSelectorProps {
-	column: string;
+interface SelectOneInputProps<Option> {
+	options: readonly Option[];
+	label: string;
+	value: Option;
+	onChange: (value: Option) => void;
 }
 
-function ColumnKindSelector({column}: ColumnKindSelectorProps) {
+function SelectOneInput<Option extends string | number>({
+	label,
+	options,
+	value,
+	onChange,
+}: SelectOneInputProps<Option>) {
 	const labelId = useId();
 	const selectId = useId();
-	const [kind, setKind] = useState<string>(bestGuess(column));
 	return (
 		<FormControl>
-			<InputLabel id={labelId}>Kind</InputLabel>
+			<InputLabel id={labelId}>{label}</InputLabel>
 			<Select
-				label="Kind"
+				label={label}
 				labelId={labelId}
 				id={selectId}
-				value={kind}
+				value={value}
 				onChange={(event) => {
-					setKind(event.target.value);
+					onChange(event.target.value as Option);
 				}}
 			>
-				{kinds.map((kind) => (
-					<MenuItem key={kind} value={kind}>
-						{kind}
+				{options.map((option) => (
+					<MenuItem key={option} value={option}>
+						{String(option)}
 					</MenuItem>
 				))}
 			</Select>
@@ -74,26 +68,106 @@ function ColumnKindSelector({column}: ColumnKindSelectorProps) {
 function DatasetColumnConfiguration({
 	columns,
 }: DatasetColumnConfigurationProps) {
+	const [state, dispatch] = useDataInfo();
 	return (
 		<TableContainer component={Paper}>
 			<Table>
 				<TableHead>
 					<TableRow>
 						<TableCell>Column</TableCell>
+						<TableCell>Selection</TableCell>
 						<TableCell>Type</TableCell>
+						<TableCell>Unit</TableCell>
+						<TableCell>Scale</TableCell>
+						<TableCell>Nature</TableCell>
+						<TableCell>Data Type</TableCell>
+						<TableCell>Descriptor</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{columns.map((column) => {
-						return (
-							<TableRow key={column}>
-								<TableCell>{column}</TableCell>
-								<TableCell>
-									<ColumnKindSelector column={column} />
-								</TableCell>
-							</TableRow>
-						);
-					})}
+					{columns
+						.slice()
+						.sort((a, b) => {
+							if (state.get(a)?.drop) {
+								return state.get(b)?.drop
+									? columns.indexOf(a) - columns.indexOf(b)
+									: 1;
+							}
+
+							if (state.get(b)?.drop) {
+								return -1;
+							}
+
+							return columns.indexOf(a) - columns.indexOf(b);
+						})
+						.map((column) => {
+							const config = state.get(column);
+							console.debug({state, config});
+							if (config === undefined) return null;
+							return (
+								<TableRow key={column}>
+									<TableCell>
+										<Checkbox
+											checked={!config.drop}
+											onClick={() => {
+												dispatch(column, 'drop')(!config.drop);
+											}}
+										/>
+									</TableCell>
+									<TableCell>{column}</TableCell>
+									<TableCell>
+										<SelectOneInput
+											label="Type"
+											options={types}
+											value={config.type}
+											onChange={dispatch(column, 'type')}
+										/>
+									</TableCell>
+									<TableCell>
+										<SelectOneInput
+											label="Unit"
+											options={units}
+											value={config.unit}
+											onChange={dispatch(column, 'unit')}
+										/>
+									</TableCell>
+									<TableCell>
+										<SelectOneInput
+											label="Scale"
+											options={scales}
+											value={config.scale}
+											onChange={dispatch(column, 'scale')}
+										/>
+									</TableCell>
+									<TableCell>
+										<SelectOneInput
+											label="Nature"
+											options={nature}
+											value={config.continuous ? 'continuous' : 'discrete'}
+											onChange={(value: Nature) => {
+												dispatch(column, 'continuous')(value === 'continuous');
+											}}
+										/>
+									</TableCell>
+									<TableCell>
+										<SelectOneInput
+											label="Data Type"
+											options={dtypes}
+											value={config.datatype}
+											onChange={dispatch(column, 'datatype')}
+										/>
+									</TableCell>
+									<TableCell>
+										<SelectOneInput
+											label="Descriptor"
+											options={descriptors}
+											value={config.descriptor ?? 'unknown'}
+											onChange={dispatch(column, 'descriptor')}
+										/>
+									</TableCell>
+								</TableRow>
+							);
+						})}
 				</TableBody>
 			</Table>
 		</TableContainer>
