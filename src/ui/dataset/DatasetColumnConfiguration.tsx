@@ -178,7 +178,10 @@ function DatasetColumnConfiguration({
 												const categories = [];
 												for (let i = 0; i < ncategories; ++i)
 													categories.push(i);
-												dispatch(column, 'categories')(categories);
+												dispatch(
+													column,
+													'categories',
+												)(ncategories === 0 ? undefined : categories);
 											}}
 										/>
 									</TableCell>
