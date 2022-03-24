@@ -15,7 +15,16 @@ function SaveDataInfoButton({filename}: Props) {
 		if (state.size === 0) return;
 		const text = JSON.stringify(
 			{
-				columns: Array.from(state.values()),
+				columns: Array.from(
+					state.values(),
+					({continuous, categories, descriptor, drop, ...rest}) => ({
+						...rest,
+						continuous: continuous ? undefined : false,
+						drop: drop ? true : undefined,
+						descriptor: descriptor === 'unknown' ? undefined : descriptor,
+						categories: categories?.length === 0 ? undefined : categories,
+					}),
+				),
 			},
 			undefined,
 			2,

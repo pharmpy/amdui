@@ -108,10 +108,7 @@ function DatasetColumnConfiguration({
 										<Checkbox
 											checked={!config.drop}
 											onClick={() => {
-												dispatch(
-													column,
-													'drop',
-												)(config.drop ? undefined : true);
+												dispatch(column, 'drop')(!config.drop);
 											}}
 										/>
 									</TableCell>
@@ -148,10 +145,7 @@ function DatasetColumnConfiguration({
 												config.continuous === false ? 'discrete' : 'continuous'
 											}
 											onChange={(value: Nature) => {
-												dispatch(
-													column,
-													'continuous',
-												)(value === 'continuous' ? undefined : false);
+												dispatch(column, 'continuous')(value === 'continuous');
 											}}
 										/>
 									</TableCell>
@@ -181,14 +175,10 @@ function DatasetColumnConfiguration({
 													Number.parseInt(event.target.value, 10) || 0,
 													200,
 												);
-												if (ncategories === 0) {
-													dispatch(column, 'categories')(undefined);
-												} else {
-													const categories = [0];
-													for (let i = 1; i < ncategories; ++i)
-														categories.push(i);
-													dispatch(column, 'categories')(categories);
-												}
+												const categories = [];
+												for (let i = 0; i < ncategories; ++i)
+													categories.push(i);
+												dispatch(column, 'categories')(categories);
 											}}
 										/>
 									</TableCell>
