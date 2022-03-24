@@ -1,15 +1,17 @@
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import React from 'react';
+import Breadcrumbs from './navigation/BreadCrumbs';
 
-function Header() {
+interface HeaderProps {
+	location: Location;
+}
+
+function Header({location}: HeaderProps) {
 	return (
 		<AppBar position="static">
 			<Toolbar>
-				<Typography variant="h6" color="inherit" component="div">
-					AMD UI
-				</Typography>
+				<Breadcrumbs location={location} />
 			</Toolbar>
 		</AppBar>
 	);
