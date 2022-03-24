@@ -74,8 +74,8 @@ function DatasetColumnConfiguration({
 			<Table>
 				<TableHead>
 					<TableRow>
-						<TableCell>Column</TableCell>
 						<TableCell>Selection</TableCell>
+						<TableCell>Column</TableCell>
 						<TableCell>Type</TableCell>
 						<TableCell>Unit</TableCell>
 						<TableCell>Scale</TableCell>
