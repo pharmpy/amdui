@@ -13,8 +13,9 @@ export type Dispatch = (
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const Context = React.createContext<[State, Dispatch]>([
 	iMap<string, Column>({}),
-	// eslint-disable-next-line @typescript-eslint/no-empty-function
-	() => () => {},
+	() => () => {
+		// NOTE no-op by default
+	},
 ]);
 
 export default Context;
