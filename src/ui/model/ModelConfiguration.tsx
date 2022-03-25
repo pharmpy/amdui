@@ -25,8 +25,8 @@ function ModelType() {
 					dispatch({type: 'update', key: 'type', value: event.target.value});
 				}}
 			>
-				<FormControlLabel value="pk_iv" control={<Radio />} label="iv" />
-				<FormControlLabel value="pk_oral" control={<Radio />} label="oral" />
+				<FormControlLabel value="pk_iv" control={<Radio />} label="IV" />
+				<FormControlLabel value="pk_oral" control={<Radio />} label="Oral" />
 			</RadioGroup>
 		</FormControl>
 	);

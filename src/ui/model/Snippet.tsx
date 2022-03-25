@@ -25,7 +25,7 @@ function Snippet() {
 	return (
 		<Grid container spacing={2} padding={2}>
 			<Grid item>
-				<ButtonGroup variant="contained" aria-label="language">
+				<ButtonGroup disableElevation variant="contained" aria-label="language">
 					{Object.entries(languages).map(([key, repr]) => (
 						<Button
 							key={key}
