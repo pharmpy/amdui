@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
+import HighlightGrammar from '../lib/text/HighlightGrammar';
 
 const languages = {
 	python: 'Python',
@@ -42,9 +42,7 @@ function Snippet() {
 				</ButtonGroup>
 			</Grid>
 			<Grid item xs={12}>
-				<Paper variant="outlined" sx={{height: 400}}>
-					<pre>{code}</pre>
-				</Paper>
+				<HighlightGrammar language={language} word={code} />
 			</Grid>
 		</Grid>
 	);
