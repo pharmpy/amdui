@@ -10,6 +10,8 @@ import {PropsOf} from '@emotion/react/types/helper';
 import {ThemeProvider} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
+import ModeProvider from '../ui/theme/ModeProvider';
+
 import useTheme from '../ui/useTheme';
 import Header from '../ui/Header';
 import Main from '../ui/Main';
@@ -29,4 +31,12 @@ function Layout({path, ...rest}: LayoutProps) {
 	);
 }
 
-export default Layout;
+function App(props: LayoutProps) {
+	return (
+		<ModeProvider>
+			<Layout {...props} />
+		</ModeProvider>
+	);
+}
+
+export default App;

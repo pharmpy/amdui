@@ -1,15 +1,20 @@
 import {useMemo} from 'react';
 import {createTheme} from '@mui/material/styles';
 
-const useTheme = () =>
-	useMemo(
+import useMode from './theme/useMode';
+
+const useTheme = () => {
+	const [mode] = useMode();
+	console.debug('useTheme', {mode});
+	return useMemo(
 		() =>
 			createTheme({
 				palette: {
-					mode: 'dark',
+					mode,
 				},
 			}),
-		[],
+		[mode],
 	);
+};
 
 export default useTheme;
