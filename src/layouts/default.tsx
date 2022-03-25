@@ -15,15 +15,15 @@ import Header from '../ui/Header';
 import Main from '../ui/Main';
 
 interface LayoutProps extends PropsOf<typeof Main> {
-	location: Location;
+	path: string;
 }
 
-function Layout({location, ...rest}: LayoutProps) {
+function Layout({path, ...rest}: LayoutProps) {
 	const theme = useTheme();
 	return (
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
-			<Header location={location} />
+			<Header path={path} />
 			<Main {...rest} />
 		</ThemeProvider>
 	);

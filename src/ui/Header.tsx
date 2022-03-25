@@ -4,14 +4,14 @@ import React from 'react';
 import Breadcrumbs from './navigation/BreadCrumbs';
 
 interface HeaderProps {
-	location: Location;
+	path: string;
 }
 
-function Header({location}: HeaderProps) {
+function Header({path}: HeaderProps) {
 	return (
 		<AppBar position="static">
 			<Toolbar>
-				<Breadcrumbs location={location} />
+				<Breadcrumbs path={path} />
 			</Toolbar>
 		</AppBar>
 	);
