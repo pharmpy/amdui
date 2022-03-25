@@ -21,8 +21,11 @@ const useLanguage = () => useState<Language>(defaultLanguage);
 
 function Snippet() {
 	const [language, setLanguage] = useLanguage();
+	const code = `
+		run_amd(...)
+	`;
 	return (
-		<Paper sx={{height: 400}}>
+		<Paper>
 			<Grid container spacing={2} padding={2}>
 				<Grid item>
 					<ButtonGroup variant="contained" aria-label="language">
@@ -38,6 +41,11 @@ function Snippet() {
 							</Button>
 						))}
 					</ButtonGroup>
+				</Grid>
+				<Grid item xs={12}>
+					<Paper variant="outlined" sx={{height: 400}}>
+						<pre>{code}</pre>
+					</Paper>
 				</Grid>
 			</Grid>
 		</Paper>
