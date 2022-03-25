@@ -8,8 +8,8 @@ import HighlightGrammar from '../lib/text/HighlightGrammar';
 
 const languages = {
 	python: 'Python',
-	R: 'R',
-	cli: 'CLI',
+	r: 'R',
+	bash: 'bash',
 } as const;
 
 type Language = keyof typeof languages;
@@ -21,9 +21,7 @@ const useLanguage = () => useState<Language>(defaultLanguage);
 
 function Snippet() {
 	const [language, setLanguage] = useLanguage();
-	const code = `
-		run_amd(...)
-	`;
+	const code = `x = run_amd(a, b, c)`;
 	return (
 		<Grid container spacing={2} padding={2}>
 			<Grid item>

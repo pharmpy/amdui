@@ -1,13 +1,24 @@
 import React, {useEffect, useState} from 'react';
 
-import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import {Check} from '@mui/icons-material';
+
+import {PrismLight as SyntaxHighlighter} from 'react-syntax-highlighter';
+import python from 'react-syntax-highlighter/dist/esm/languages/prism/python';
+import r from 'react-syntax-highlighter/dist/esm/languages/prism/r';
+import bash from 'react-syntax-highlighter/dist/esm/languages/prism/bash';
+import dark from 'react-syntax-highlighter/dist/esm/styles/prism/material-dark';
+import light from 'react-syntax-highlighter/dist/esm/styles/prism/material-light';
+import {useTheme} from '@mui/material/styles';
 import saveTextToClipboard from '../output/saveTextToClipboard';
+
+SyntaxHighlighter.registerLanguage('python', python);
+SyntaxHighlighter.registerLanguage('bash', bash);
+SyntaxHighlighter.registerLanguage('r', r);
 
 interface Props {
 	language: string;
@@ -44,7 +55,16 @@ const copyToClipboardColor = (state: State) => {
 	}
 };
 
+const customStyle = {margin: 0, display: 'flex', flex: '1'};
+
+type Style = typeof dark | typeof light;
+
 function HighlightGrammar({language, word}: Props) {
+	const {
+		palette: {mode},
+	} = useTheme();
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+	const style: Style = mode === 'dark' ? dark : light;
 	const [tooltipText, setTooltipText] = useState<State>(init);
 	const [open, setOpen] = useState<boolean>(false);
 	const handleOpen = () => {
@@ -61,6 +81,14 @@ function HighlightGrammar({language, word}: Props) {
 	}, [language, word]);
 	return (
 		<Paper variant="outlined" sx={{display: 'flex', position: 'relative'}}>
+			<SyntaxHighlighter
+				language={language}
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+				style={style}
+				customStyle={customStyle}
+			>
+				{word}
+			</SyntaxHighlighter>
 			<Tooltip
 				open={open}
 				title={tooltipText}
@@ -92,9 +120,6 @@ function HighlightGrammar({language, word}: Props) {
 					<CopyToClipboardIcon state={tooltipText} />
 				</Button>
 			</Tooltip>
-			<Box sx={{padding: 2}}>
-				<pre style={{margin: 0}}>{word}</pre>
-			</Box>
 		</Paper>
 	);
 }
