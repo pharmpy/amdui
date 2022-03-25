@@ -3,6 +3,7 @@ import React from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import ModelConfiguration from '../ui/model/ModelConfiguration';
+import Snippet from '../ui/model/Snippet';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 function RunAMDPage() {
@@ -15,7 +16,7 @@ function RunAMDPage() {
 				<Paper sx={{height: 400}} />
 			</Grid>
 			<Grid item xs={12}>
-				<Paper sx={{height: 400}} />
+				<Snippet />
 			</Grid>
 		</Grid>
 	);
