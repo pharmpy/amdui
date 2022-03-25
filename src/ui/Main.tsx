@@ -1,19 +1,14 @@
 import React from 'react';
 
-import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 
 interface MainProps {
 	children: React.ReactNode;
 }
 
 function Main({children}: MainProps) {
-	return (
-		<Grid container spacing={2} padding={2}>
-			<Grid item xs={12} sx={{paddingBottom: 10}}>
-				{children}
-			</Grid>
-		</Grid>
-	);
+	// NOTE padding-bottom is used to make sure content can be scroll past FABs
+	return <Box sx={{paddingBottom: 10}}>{children}</Box>;
 }
 
 export default Main;

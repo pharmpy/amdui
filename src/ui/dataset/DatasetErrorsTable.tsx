@@ -15,7 +15,6 @@ interface DatasetErrorsTableProps {
 }
 
 function DatasetErrorsTable({errors}: DatasetErrorsTableProps) {
-	if (errors.length === 0) return null;
 	return (
 		<TableContainer component={Paper}>
 			<Table>

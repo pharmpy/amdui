@@ -86,7 +86,7 @@ function ConfigureDatasetConsumer({
 			>
 				<SaveIcon />
 			</Fab>
-			<Grid container spacing={3}>
+			<Grid container spacing={3} padding={3}>
 				{dataset === undefined ? null : (
 					<Grid item xs={12}>
 						<Typography variant="h3">{dataset.name}</Typography>
@@ -101,7 +101,7 @@ function ConfigureDatasetConsumer({
 						<DatasetColumnConfiguration columns={columns} />
 					</Grid>
 				)}
-				{csv === undefined ? null : (
+				{csv === undefined || csv.errors.length === 0 ? null : (
 					<Grid item xs={12}>
 						<DatasetErrorsTable errors={csv.errors} />
 					</Grid>

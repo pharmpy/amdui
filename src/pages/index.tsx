@@ -41,7 +41,7 @@ interface TilesProps {
 
 function Tiles({children}: TilesProps) {
 	return (
-		<Grid container spacing={4} padding={1} justifyContent="center">
+		<Grid container spacing={4} padding={4} justifyContent="center">
 			{children}
 		</Grid>
 	);
