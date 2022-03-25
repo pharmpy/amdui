@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkamd_ui=self.webpackChunkamd_ui||[]).push([[840],{8714:function(t,e,i){i.r(e);var Z=i(4320),s=i(8953),n=i(3431);e.default=function(){return(0,n.tZ)(Z.ZP,{container:!0,spacing:2,padding:2},(0,n.tZ)(Z.ZP,{item:!0,xs:6},(0,n.tZ)(s.Z,{sx:{height:400}})),(0,n.tZ)(Z.ZP,{item:!0,xs:6},(0,n.tZ)(s.Z,{sx:{height:400}})),(0,n.tZ)(Z.ZP,{item:!0,xs:12},(0,n.tZ)(s.Z,{sx:{height:400}})))}}}]);
+//# sourceMappingURL=component---src-pages-run-amd-tsx-e515d241cd5976f0ee87.js.map
