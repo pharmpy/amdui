@@ -25,30 +25,28 @@ function Snippet() {
 		run_amd(...)
 	`;
 	return (
-		<Paper>
-			<Grid container spacing={2} padding={2}>
-				<Grid item>
-					<ButtonGroup variant="contained" aria-label="language">
-						{Object.entries(languages).map(([key, repr]) => (
-							<Button
-								key={key}
-								disabled={language === key}
-								onClick={() => {
-									setLanguage(key as Language);
-								}}
-							>
-								{repr}
-							</Button>
-						))}
-					</ButtonGroup>
-				</Grid>
-				<Grid item xs={12}>
-					<Paper variant="outlined" sx={{height: 400}}>
-						<pre>{code}</pre>
-					</Paper>
-				</Grid>
+		<Grid container spacing={2} padding={2}>
+			<Grid item>
+				<ButtonGroup variant="contained" aria-label="language">
+					{Object.entries(languages).map(([key, repr]) => (
+						<Button
+							key={key}
+							disabled={language === key}
+							onClick={() => {
+								setLanguage(key as Language);
+							}}
+						>
+							{repr}
+						</Button>
+					))}
+				</ButtonGroup>
 			</Grid>
-		</Paper>
+			<Grid item xs={12}>
+				<Paper variant="outlined" sx={{height: 400}}>
+					<pre>{code}</pre>
+				</Paper>
+			</Grid>
+		</Grid>
 	);
 }
 

@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Paper from '@mui/material/Paper';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -37,14 +36,12 @@ const columns: Column[] = [];
 
 export default function ModelConfiguration() {
 	return (
-		<Paper sx={{height: 400}}>
-			<ModelProvider columns={columns}>
-				<Grid container spacing={2} padding={2}>
-					<Grid item xs={4}>
-						<ModelType />
-					</Grid>
+		<ModelProvider columns={columns}>
+			<Grid container spacing={2} padding={2}>
+				<Grid item xs={4}>
+					<ModelType />
 				</Grid>
-			</ModelProvider>
-		</Paper>
+			</Grid>
+		</ModelProvider>
 	);
 }

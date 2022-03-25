@@ -10,13 +10,17 @@ function RunAMDPage() {
 	return (
 		<Grid container spacing={2} padding={2}>
 			<Grid item xs={6}>
-				<ModelConfiguration />
+				<Paper sx={{display: 'flex'}}>
+					<ModelConfiguration />
+				</Paper>
 			</Grid>
 			<Grid item xs={6}>
 				<Paper sx={{height: 400}} />
 			</Grid>
 			<Grid item xs={12}>
-				<Snippet />
+				<Paper sx={{display: 'flex'}}>
+					<Snippet />
+				</Paper>
 			</Grid>
 		</Grid>
 	);
