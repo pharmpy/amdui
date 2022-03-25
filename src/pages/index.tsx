@@ -1,11 +1,11 @@
 import React from 'react';
+import {Link} from 'gatsby';
 
 import Grid from '@mui/material/Grid';
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import {Link} from 'gatsby';
 
 interface TileProps {
 	to: string;

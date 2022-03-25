@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {createContext} from 'react';
 import {Seq as iSeq} from 'immutable';
 
 import {Column} from '../lib/datainfo/schema';
@@ -60,7 +60,7 @@ export const reducer = (state: State, action: Action) => {
 export type Dispatch = React.Dispatch<Action>;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-const Context = React.createContext<[State, Dispatch]>([
+const Context = createContext<[State, Dispatch]>([
 	init([]),
 	() => {
 		// NOTE no-op by default

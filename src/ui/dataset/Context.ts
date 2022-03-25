@@ -1,4 +1,5 @@
-import React from 'react';
+import {createContext} from 'react';
+
 import {Map as iMap} from 'immutable';
 
 import {Column} from '../lib/datainfo/schema';
@@ -11,7 +12,7 @@ export type Dispatch = (
 ) => (value: Column[typeof key]) => void;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-const Context = React.createContext<[State, Dispatch]>([
+const Context = createContext<[State, Dispatch]>([
 	iMap<string, Column>({}),
 	() => () => {
 		// NOTE no-op by default
