@@ -3,7 +3,7 @@ import React from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import ModelConfiguration from '../ui/model/ModelConfiguration';
-import Snippet from '../ui/model/Snippet';
+import Snippet from '../ui/amd/Snippet';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 function RunAMDPage() {
