@@ -1,11 +1,12 @@
 import {PaletteMode} from '@mui/material';
 import {useEffect, useState} from 'react';
+import isBrowser from '../../lib/env';
 
 const matchMediaDarkQuery = '(prefers-color-scheme: dark)';
 const matchMediaLightQuery = '(prefers-color-scheme: light)';
 
 const getCurrentNavigatorMode = (): PaletteMode | undefined => {
-	if (window.matchMedia) {
+	if (isBrowser && window.matchMedia) {
 		if (window.matchMedia(matchMediaDarkQuery).matches) {
 			return 'dark';
 		}
