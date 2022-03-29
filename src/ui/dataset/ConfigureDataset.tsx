@@ -1,4 +1,4 @@
-import React, {ChangeEventHandler, useEffect, useState} from 'react';
+import React, {ChangeEventHandler, useState} from 'react';
 
 import Grid from '@mui/material/Grid';
 import Fab from '@mui/material/Fab';
@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import InputFileButton from '../lib/input/InputFileButton';
 import getCSV from '../../lib/csv/getCSV';
 import CSV from '../../lib/csv/CSV';
+import useFile from '../../lib/file/useFile';
 import FileMetadataTable from './FileMetadataTable';
 import DatasetMetadataTable from './DatasetMetadataTable';
 import DatasetColumnConfiguration from './DatasetColumnConfiguration';
@@ -21,44 +22,7 @@ import useSave from './useSave';
 import useDataInfo from './useDataInfo';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-const useCSV = (file: File | undefined) => {
-	const [data, setData] = useState<CSV<Row> | undefined>(undefined);
-	const [loading, setLoading] = useState<boolean>(false);
-	const [error, setError] = useState<Error | undefined>(undefined);
-	useEffect(() => {
-		setData(undefined);
-		setError(undefined);
-		if (file === undefined) {
-			setLoading(false);
-			return;
-		}
-
-		setLoading(true);
-		let cancelled = false;
-		getCSV<Row>(file).then(
-			(result) => {
-				if (cancelled) return;
-				setData(result);
-				setLoading(false);
-			},
-			(error: any) => {
-				if (cancelled) return;
-				setError(error);
-				setLoading(false);
-			},
-		);
-
-		return () => {
-			cancelled = true;
-		};
-	}, [file]);
-
-	return {
-		loading,
-		error,
-		data,
-	};
-};
+const useCSV = (file: File | undefined) => useFile<CSV<Row>>(file, getCSV);
 
 interface ConfigureDatasetConsumerProps {
 	dataset?: File;
