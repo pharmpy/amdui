@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 
-import {Map as iMap} from 'immutable';
+import {OrderedMap as iOrderedMap} from 'immutable';
 
 import {PropsOf} from '@emotion/react/types/helper';
 import {Column, Type} from '../lib/datainfo/schema';
@@ -27,25 +27,23 @@ const bestGuess = (_column: string): Type => {
 };
 
 function Provider({columns, ...rest}: ProviderProps) {
-	const [state, setState] = useState<State>(iMap<string, Column>({}));
+	const [state, setState] = useState<State>(iOrderedMap<string, Column>([]));
 
 	useEffect(() => {
 		setState(
-			iMap(
-				Object.fromEntries(
-					columns.map((name) => [
+			iOrderedMap<string, Column>(
+				columns.map((name) => [
+					name,
+					{
 						name,
-						{
-							name,
-							type: bestGuess(name),
-							unit: '1',
-							continuous: true,
-							scale: 'ratio',
-							datatype: 'float64',
-							descriptor: 'unknown',
-						} as const,
-					]),
-				),
+						type: bestGuess(name),
+						unit: '1',
+						continuous: true,
+						scale: 'ratio',
+						datatype: 'float64',
+						descriptor: 'unknown',
+					} as const,
+				]),
 			),
 		);
 	}, [columns]);

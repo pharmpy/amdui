@@ -168,20 +168,22 @@ function DatasetColumnConfiguration({
 									<TableCell>
 										<TextField
 											label="Categories"
-											inputProps={{inputMode: 'numeric'}}
 											value={config.categories?.length.toString() ?? ''}
-											onChange={(event) => {
-												const ncategories = Math.min(
-													Number.parseInt(event.target.value, 10) || 0,
-													200,
-												);
-												const categories = [];
-												for (let i = 0; i < ncategories; ++i)
-													categories.push(i);
-												dispatch(
-													column,
-													'categories',
-												)(ncategories === 0 ? undefined : categories);
+											onChange={({target: {value}}) => {
+												if (value === '') {
+													dispatch(column, 'categories')(undefined);
+													return;
+												}
+
+												if (!/^[1-9]\d*$/.test(value)) return;
+												const parsed = Number.parseInt(value, 10);
+												if (Number.isNaN(parsed)) return;
+												const ncategories = Math.min(parsed, 200);
+												// eslint-disable-next-line unicorn/no-new-array
+												const categories = new Array(ncategories)
+													.fill(0)
+													.map((_, index) => index);
+												dispatch(column, 'categories')(categories);
 											}}
 										/>
 									</TableCell>
