@@ -1,36 +1,52 @@
 import React, {createContext} from 'react';
-import {Seq as iSeq} from 'immutable';
+import {Set as iSet} from 'immutable';
 
 import {Column} from '../lib/datainfo/schema';
 
-export const init = (columns: Column[]) => {
+export interface State {
+	datainfoFilename: string | undefined;
+	columns: Column[];
+	type: 'pk_oral' | 'pk_iv';
+	popCl: number;
+	popVc: number;
+	popMat: number;
+	lloq: number;
+	categorical: iSet<number>;
+	continuous: iSet<number>;
+	categoricalAll: readonly number[];
+	continuousAll: readonly number[];
+}
+
+export const init = ({
+	dataInfo,
+	columns = [],
+}: {
+	dataInfo?: File;
+	columns?: Column[];
+}): State => {
 	// NOTE this is to handle columns with identical names
 	const columnsIndexed = columns.map((column, index) => ({...column, index}));
 	const covariates = columnsIndexed.filter(({type}) => type === 'covariate');
-	const categoricalAll = iSeq(
-		covariates
-			.filter(({scale}) => scale === 'nominal' || scale === 'ordinal')
-			.map(({index}) => index),
-	);
-	const continuousAll = iSeq(
-		covariates
-			.filter(({continuous}) => continuous || continuous === undefined)
-			.map(({index}) => index),
-	);
+	const categoricalAll = covariates
+		.filter(({scale}) => scale === 'nominal' || scale === 'ordinal')
+		.map(({index}) => index);
+	const continuousAll = covariates
+		.filter(({continuous}) => continuous || continuous === undefined)
+		.map(({index}) => index);
 	return {
+		datainfoFilename: dataInfo?.name,
+		columns,
 		type: 'pk_oral',
-		popCl: '',
-		popVc: '',
-		popMat: '',
-		lloq: '',
-		categorical: categoricalAll,
-		continuous: continuousAll,
+		popCl: Number.NaN,
+		popVc: Number.NaN,
+		popMat: Number.NaN,
+		lloq: Number.NaN,
+		categorical: iSet(categoricalAll),
+		continuous: iSet(continuousAll),
 		categoricalAll,
 		continuousAll,
 	};
 };
-
-export type State = ReturnType<typeof init>;
 
 type UpdateAction = {
 	[K in keyof State]: {
@@ -42,7 +58,8 @@ type UpdateAction = {
 
 interface InitAction {
 	type: 'init';
-	columns: Column[];
+	dataInfo?: File;
+	columns?: Column[];
 }
 
 type Action = UpdateAction | InitAction;
@@ -53,7 +70,7 @@ export const reducer = (state: State, action: Action) => {
 		case 'update':
 			return {...state, [action.key]: action.value};
 		case 'init':
-			return init(action.columns);
+			return init(action);
 	}
 };
 
@@ -61,7 +78,7 @@ export type Dispatch = React.Dispatch<Action>;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const Context = createContext<[State, Dispatch]>([
-	init([]),
+	init({}),
 	() => {
 		// NOTE no-op by default
 	},

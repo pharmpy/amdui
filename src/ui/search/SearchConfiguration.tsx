@@ -2,8 +2,8 @@ import React, {useCallback} from 'react';
 
 import Grid from '@mui/material/Grid';
 import Checkboxes from '../lib/input/Checkboxes';
+import useModel from '../model/useModel';
 import useSearch from './useSearch';
-import SearchProvider from './SearchProvider';
 
 function AbsorptionRate() {
 	const [state, dispatch] = useSearch();
@@ -104,25 +104,28 @@ function Elimination() {
 }
 
 export default function SearchConfiguration() {
+	const [state] = useModel();
 	return (
-		<SearchProvider>
-			<Grid container spacing={2} padding={2}>
-				<Grid item xs={4}>
-					<AbsorptionRate />
-				</Grid>
-				<Grid item xs={4}>
-					<AbsorptionDelay />
-				</Grid>
-				<Grid item xs={4}>
-					<AbsorptionDelayTransits />
-				</Grid>
-				<Grid item xs={4}>
-					<Distribution />
-				</Grid>
-				<Grid item xs={4}>
-					<Elimination />
-				</Grid>
+		<Grid container spacing={2} padding={2}>
+			{state.type === 'pk_oral' && (
+				<>
+					<Grid item xs={12} sm={6} md={4}>
+						<AbsorptionRate />
+					</Grid>
+					<Grid item xs={12} sm={6} md={4}>
+						<AbsorptionDelay />
+					</Grid>
+					<Grid item xs={12} sm={6} md={4}>
+						<AbsorptionDelayTransits />
+					</Grid>
+				</>
+			)}
+			<Grid item xs={12} sm={6} md={4}>
+				<Distribution />
 			</Grid>
-		</SearchProvider>
+			<Grid item xs={12} sm={6} md={4}>
+				<Elimination />
+			</Grid>
+		</Grid>
 	);
 }

@@ -14,9 +14,9 @@ export const init = () => {
 		distributionCompartments: iSet([1, 2, 3]),
 		distributionCompartmentsDisabled: iSet([1]),
 		distributionCompartmentsAll: [1, 2, 3] as const,
-		elimination: iSet(['FO', 'MM', 'FO-MM']),
+		elimination: iSet(['FO', 'MM', 'MIX-FO-MM']),
 		eliminationDisabled: iSet(['FO']),
-		eliminationAll: ['FO', 'MM', 'ZO', 'FO-MM'] as const,
+		eliminationAll: ['FO', 'MM', 'ZO', 'MIX-FO-MM'] as const,
 	};
 };
 
