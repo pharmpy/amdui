@@ -7,6 +7,7 @@ import DataArrayIcon from '@mui/icons-material/DataArray';
 import SaveIcon from '@mui/icons-material/Save';
 
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import InputFileButton from '../lib/input/InputFileButton';
 import getCSV from '../../lib/csv/getCSV';
 import CSV from '../../lib/csv/CSV';
@@ -35,6 +36,7 @@ function ConfigureDatasetConsumer({
 	csv,
 	columns,
 }: ConfigureDatasetConsumerProps) {
+	const [showMetadata, setShowMetadata] = useState<boolean>(false);
 	const [state] = useDataInfo();
 	const save = useSave(
 		state,
@@ -56,6 +58,11 @@ function ConfigureDatasetConsumer({
 						<Typography variant="h3">{dataset.name}</Typography>
 					</Grid>
 				)}
+				{csv === undefined || csv.errors.length === 0 ? null : (
+					<Grid item xs={12}>
+						<DatasetErrorsTable errors={csv.errors} />
+					</Grid>
+				)}
 				{dataset === undefined ? null : csv === undefined ? (
 					<Grid item xs={12}>
 						<Typography variant="h6">loading...</Typography>
@@ -65,22 +72,41 @@ function ConfigureDatasetConsumer({
 						<DatasetColumnConfiguration columns={columns} />
 					</Grid>
 				)}
-				{csv === undefined || csv.errors.length === 0 ? null : (
+				{dataset === undefined ? null : (
 					<Grid item xs={12}>
-						<DatasetErrorsTable errors={csv.errors} />
+						{showMetadata ? (
+							<Typography variant="h3">
+								Metadata{' '}
+								<Button
+									onClick={() => {
+										setShowMetadata(false);
+									}}
+								>
+									hide
+								</Button>
+							</Typography>
+						) : (
+							<Button
+								onClick={() => {
+									setShowMetadata(true);
+								}}
+							>
+								Show metadata
+							</Button>
+						)}
 					</Grid>
 				)}
-				{dataset === undefined ? null : (
+				{dataset === undefined || !showMetadata ? null : (
 					<Grid item xs={12}>
 						<FileMetadataTable file={dataset} />
 					</Grid>
 				)}
-				{csv === undefined ? null : (
+				{csv === undefined || !showMetadata ? null : (
 					<Grid item xs={12}>
 						<DatasetMetadataTable meta={csv.meta} />
 					</Grid>
 				)}
-				{csv === undefined ? null : (
+				{csv === undefined || !showMetadata ? null : (
 					<Grid item xs={12}>
 						<DatasetDataTable data={csv.data} />
 					</Grid>

@@ -2,13 +2,8 @@ import React from 'react';
 
 import {ParseError} from 'papaparse';
 
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 interface DatasetErrorsTableProps {
 	errors: ParseError[];
@@ -16,25 +11,18 @@ interface DatasetErrorsTableProps {
 
 function DatasetErrorsTable({errors}: DatasetErrorsTableProps) {
 	return (
-		<TableContainer component={Paper}>
-			<Table>
-				<TableHead>
-					<TableRow>
-						<TableCell>Index</TableCell>
-						<TableCell>Error</TableCell>
-					</TableRow>
-				</TableHead>
-				<TableBody>
-					{errors.map((error, index) => (
-						// eslint-disable-next-line react/no-array-index-key
-						<TableRow key={index}>
-							<TableCell>{index}</TableCell>
-							<TableCell>{JSON.stringify(error)}</TableCell>
-						</TableRow>
-					))}
-				</TableBody>
-			</Table>
-		</TableContainer>
+		<>
+			{errors.map((error, index) => (
+				// eslint-disable-next-line react/no-array-index-key
+				<Alert key={index} severity="error">
+					<AlertTitle>
+						Error{errors.length >= 2 ? ` #${index + 1}` : null}
+					</AlertTitle>
+					An error was raised while parsing the dataset:
+					<pre>{JSON.stringify(error, undefined, 2)}</pre>
+				</Alert>
+			))}
+		</>
 	);
 }
 
