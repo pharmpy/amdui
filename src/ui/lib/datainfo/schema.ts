@@ -1,3 +1,7 @@
+export type DataInfo = {
+	columns: Column[];
+};
+
 export type Column = {
 	name: string;
 	type: Type;
