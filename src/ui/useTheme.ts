@@ -5,7 +5,6 @@ import useMode from './theme/useMode';
 
 const useTheme = () => {
 	const [mode] = useMode();
-	console.debug('useTheme', {mode});
 	return useMemo(
 		() =>
 			createTheme({
