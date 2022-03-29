@@ -74,65 +74,100 @@ const mfl = (type: 'pk_iv' | 'pk_oral', search: SearchState) => {
 
 const snippet = (
 	language: Language,
-	path: string,
 	model: ModelState,
 	search: SearchState,
 ) => {
-	if (language === 'bash') {
-		// TODO Find out what the syntax is
-		return 'pharmpy run amd --foo bar ..';
-	}
-
-	return join(
-		[
-			language === 'python'
-				? `from pharmpy.modeling import run_amd\n`
-				: `library(pharmr)\n`,
-			'run_amd(',
-			join(
+	const path = model.datainfoFilename?.replace(/\.[^.]+/, '.csv');
+	// eslint-disable-next-line default-case
+	switch (language) {
+		case 'bash':
+			// TODO Find out what the syntax is
+			return `pharmpy run ${
+				path === undefined ? '<filename>' : path
+			} amd --foo bar ..`;
+		case 'python':
+			return join(
 				[
-					`  ${path}`,
-					`  modeltype=${JSON.stringify(model.type)}`,
-					Number.isNaN(model.popCl) ? '' : `  cl_init=${model.popCl}`,
-					Number.isNaN(model.popVc) ? '' : `  vc_init=${model.popVc}`,
-					model.type !== 'pk_oral' || Number.isNaN(model.popMat)
-						? ''
-						: `  mat_init=${model.popMat}`,
-					`  mfl=${JSON.stringify(mfl(model.type, search))}`,
-					Number.isNaN(model.lloq) ? '' : `  lloq=${model.lloq}`,
-					model.categorical.size === 0
-						? ''
-						: `  categorical=${JSON.stringify(
-								model.categorical
-									.map((index) => model.columns[index].name)
-									.toArray(),
-						  )}`,
-					model.continuous.size === 0
-						? ''
-						: `  continuous=${JSON.stringify(
-								model.continuous
-									.map((index) => model.columns[index].name)
-									.toArray(),
-						  )}`,
+					`from pharmpy.modeling import run_amd\n`,
+					'run_amd(',
+					join(
+						[
+							`  ${path === undefined ? 'filename' : JSON.stringify(path)}`,
+							`  modeltype=${JSON.stringify(model.type)}`,
+							Number.isNaN(model.popCl) ? '' : `  cl_init=${model.popCl}`,
+							Number.isNaN(model.popVc) ? '' : `  vc_init=${model.popVc}`,
+							model.type !== 'pk_oral' || Number.isNaN(model.popMat)
+								? ''
+								: `  mat_init=${model.popMat}`,
+							`  mfl=${JSON.stringify(mfl(model.type, search))}`,
+							Number.isNaN(model.lloq) ? '' : `  lloq=${model.lloq}`,
+							model.categorical.size === 0
+								? ''
+								: `  categorical=${JSON.stringify(
+										model.categorical
+											.map((index) => model.columns[index].name)
+											.toArray(),
+								  )}`,
+							model.continuous.size === 0
+								? ''
+								: `  continuous=${JSON.stringify(
+										model.continuous
+											.map((index) => model.columns[index].name)
+											.toArray(),
+								  )}`,
+						],
+						',\n',
+					),
+					')',
 				],
-				',\n',
-			),
-			')',
-		],
-		'\n',
-	);
+				'\n',
+			);
+		case 'r':
+			return join(
+				[
+					`library(pharmr)\n`,
+					'run_amd(',
+					join(
+						[
+							`  ${path === undefined ? 'filename' : JSON.stringify(path)}`,
+							`  modeltype=${JSON.stringify(model.type)}`,
+							Number.isNaN(model.popCl) ? '' : `  cl_init=${model.popCl}`,
+							Number.isNaN(model.popVc) ? '' : `  vc_init=${model.popVc}`,
+							model.type !== 'pk_oral' || Number.isNaN(model.popMat)
+								? ''
+								: `  mat_init=${model.popMat}`,
+							`  mfl=${JSON.stringify(mfl(model.type, search))}`,
+							Number.isNaN(model.lloq) ? '' : `  lloq=${model.lloq}`,
+							model.categorical.size === 0
+								? ''
+								: `  categorical=c(${JSON.stringify(
+										model.categorical
+											.map((index) => model.columns[index].name)
+											.toArray(),
+								  ).slice(1, -1)})`,
+							model.continuous.size === 0
+								? ''
+								: `  continuous=c(${JSON.stringify(
+										model.continuous
+											.map((index) => model.columns[index].name)
+											.toArray(),
+								  ).slice(1, -1)})`,
+						],
+						',\n',
+					),
+					')',
+				],
+				'\n',
+			);
+	}
 };
 
 function Snippet() {
 	const [language, setLanguage] = useLanguage();
 	const [model] = useModel();
 	const [search] = useSearch();
-	const path =
-		model.datainfoFilename === undefined
-			? 'filename'
-			: JSON.stringify(model.datainfoFilename.replace(/\.[^.]+/, '.csv'));
 
-	const code = snippet(language, path, model, search);
+	const code = snippet(language, model, search);
 
 	return (
 		<Grid container spacing={2} padding={2}>
