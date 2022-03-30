@@ -6,6 +6,7 @@ import MuiBreadcrumbs from '@mui/material/Breadcrumbs';
 import Chip from '@mui/material/Chip';
 import IconButton from '@mui/material/IconButton';
 import React from 'react';
+import isBrowser from '../../lib/env';
 import Link from './Link';
 
 interface BreadCrumb {
@@ -27,7 +28,7 @@ interface BreadcrumbsProps {
 }
 
 function Breadcrumbs({path}: BreadcrumbsProps) {
-	const parts = path.split('/').filter((part) => part !== '');
+	const parts = isBrowser ? path.split('/').filter((part) => part !== '') : [];
 	const breadcrumbs = [home].concat(
 		parts.map((part, index) => {
 			const isLast = index === parts.length - 1;
