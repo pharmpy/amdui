@@ -27,7 +27,7 @@ const join = (parts: string[], separator: string): string => {
 	return parts.filter((part: string) => part !== '').join(separator);
 };
 
-const mfl = (type: 'pk_iv' | 'pk_oral', search: SearchState) => {
+const searchSpace = (type: 'pk_iv' | 'pk_oral', search: SearchState) => {
 	const peripherals = search.distributionCompartmentsAll
 		.filter((x) => x !== 1 && search.distributionCompartments.has(x))
 		.map((x) => String(x - 1));
@@ -99,7 +99,9 @@ const snippet = (
 							model.type !== 'pk_oral' || Number.isNaN(model.popMat)
 								? ''
 								: `  mat_init=${model.popMat}`,
-							`  mfl=${JSON.stringify(mfl(model.type, search))}`,
+							`  search_space=${JSON.stringify(
+								searchSpace(model.type, search),
+							)}`,
 							Number.isNaN(model.lloq) ? '' : `  lloq=${model.lloq}`,
 							model.categorical.size === 0
 								? ''
@@ -136,7 +138,9 @@ const snippet = (
 							model.type !== 'pk_oral' || Number.isNaN(model.popMat)
 								? ''
 								: `  mat_init=${model.popMat}`,
-							`  mfl=${JSON.stringify(mfl(model.type, search))}`,
+							`  search_space=${JSON.stringify(
+								searchSpace(model.type, search),
+							)}`,
 							Number.isNaN(model.lloq) ? '' : `  lloq=${model.lloq}`,
 							model.categorical.size === 0
 								? ''
