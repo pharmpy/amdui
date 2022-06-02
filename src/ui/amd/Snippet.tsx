@@ -60,7 +60,7 @@ const searchSpace = (type: 'pk_iv' | 'pk_oral', search: SearchState) => {
 					`TRANSITS([${join(
 						search.absorptionDelayTransitsAll
 							.filter((transit) => search.absorptionDelayTransits.has(transit))
-							.map((x: number) => String(x)),
+							.map(String),
 						',',
 					)}],*)`,
 					peripherals.length === 0

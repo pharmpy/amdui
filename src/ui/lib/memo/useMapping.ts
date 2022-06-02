@@ -16,7 +16,6 @@ const useMapping = <K, V>(map: (key: K) => V, deps?: DependencyList) => {
 			cache.set(key, value);
 			return value;
 		},
-		// eslint-disable-next-line react-hooks/exhaustive-deps, @typescript-eslint/no-unsafe-assignment
 		deps === undefined ? [cache] : [cache, ...deps],
 	);
 };

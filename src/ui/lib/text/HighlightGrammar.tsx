@@ -63,7 +63,6 @@ function HighlightGrammar({language, word}: Props) {
 	const {
 		palette: {mode},
 	} = useTheme();
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const style: Style = mode === 'dark' ? dark : light;
 	const [tooltipText, setTooltipText] = useState<State>(init);
 	const [open, setOpen] = useState<boolean>(false);
@@ -83,7 +82,6 @@ function HighlightGrammar({language, word}: Props) {
 		<Paper variant="outlined" sx={{display: 'flex', position: 'relative'}}>
 			<SyntaxHighlighter
 				language={language}
-				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 				style={style}
 				customStyle={customStyle}
 			>
