@@ -21,6 +21,7 @@ export const types = [
 	'unknown',
 	'dose',
 	'ii',
+	'ss',
 	'event',
 	'covariate',
 	'mdv',
