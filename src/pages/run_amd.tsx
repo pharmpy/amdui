@@ -1,4 +1,5 @@
-import React, {ChangeEventHandler, useState} from 'react';
+import type {ChangeEventHandler} from 'react';
+import React, {useState} from 'react';
 
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';

@@ -7,9 +7,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import React from 'react';
 
-interface FileMetadataTableProps {
+type FileMetadataTableProps = {
 	file: File;
-}
+};
 
 function FileMetadataTable({file}: FileMetadataTableProps) {
 	return (

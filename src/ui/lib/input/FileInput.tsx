@@ -1,4 +1,5 @@
-import React, {ChangeEventHandler, useRef, useState} from 'react';
+import type {ChangeEventHandler} from 'react';
+import React, {useRef, useState} from 'react';
 
 import {styled} from '@mui/material/styles';
 
@@ -8,18 +9,18 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
-import {PropsOf} from '@emotion/react/types/helper';
+import type {PropsOf} from '@emotion/react/types/helper';
 
 const Input = styled('input')({
 	display: 'none',
 });
 
-interface FileInputProps extends PropsOf<typeof OutlinedInput> {
+type FileInputProps = {
 	accept?: string;
 	onChange: ChangeEventHandler<HTMLInputElement>;
 	label?: string;
-	fullWidth?: boolean;
-}
+	fullWidth?: boolean; // eslint-disable-line react/boolean-prop-naming
+} & PropsOf<typeof OutlinedInput>;
 
 function FileInput({
 	accept,

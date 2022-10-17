@@ -1,7 +1,8 @@
 import React, {useMemo, useReducer} from 'react';
 
-import {PropsOf} from '@emotion/react/types/helper';
-import SearchContext, {Dispatch, reducer, State, init} from './SearchContext';
+import type {PropsOf} from '@emotion/react/types/helper';
+import type {Dispatch, State} from './SearchContext';
+import SearchContext, {reducer, init} from './SearchContext';
 
 type ProviderProps = Omit<PropsOf<typeof SearchContext.Provider>, 'value'>;
 

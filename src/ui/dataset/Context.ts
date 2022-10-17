@@ -2,7 +2,7 @@ import {createContext} from 'react';
 
 import {OrderedMap as iOrderedMap} from 'immutable';
 
-import {Column} from '../lib/datainfo/schema';
+import type {Column} from '../lib/datainfo/schema';
 
 export type State = iOrderedMap<string, Column>;
 

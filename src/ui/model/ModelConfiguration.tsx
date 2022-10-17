@@ -1,4 +1,5 @@
-import React, {ChangeEventHandler} from 'react';
+import type {ChangeEventHandler} from 'react';
+import React from 'react';
 
 import {Set as iSet} from 'immutable';
 
@@ -16,9 +17,9 @@ import FileInput from '../lib/input/FileInput';
 import FloatInput from '../lib/input/FloatInput';
 import useModel from './useModel';
 
-interface DataInfoProps {
+type DataInfoProps = {
 	onChange: ChangeEventHandler<HTMLInputElement>;
-}
+};
 
 function DataInfo({onChange}: DataInfoProps) {
 	return (
@@ -184,9 +185,9 @@ function ContinuousColumns() {
 	);
 }
 
-interface ModelConfigurationProps {
+type ModelConfigurationProps = {
 	onChange: ChangeEventHandler<HTMLInputElement>;
-}
+};
 
 export default function ModelConfiguration({
 	onChange,

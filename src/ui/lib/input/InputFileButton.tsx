@@ -1,4 +1,5 @@
-import React, {ChangeEventHandler} from 'react';
+import type {ChangeEventHandler} from 'react';
+import React from 'react';
 
 import {styled} from '@mui/material/styles';
 
@@ -8,11 +9,11 @@ const Input = styled('input')({
 	display: 'none',
 });
 
-interface InputFileButtonProps {
+type InputFileButtonProps = {
 	accept?: string;
 	onChange: ChangeEventHandler<HTMLInputElement>;
 	children: React.ReactNode;
-}
+};
 
 function InputFileButton({accept, onChange, children}: InputFileButtonProps) {
 	const inputId = useId();

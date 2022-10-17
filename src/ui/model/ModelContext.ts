@@ -1,9 +1,10 @@
-import React, {createContext} from 'react';
+import type React from 'react';
+import {createContext} from 'react';
 import {Set as iSet} from 'immutable';
 
-import {Column} from '../lib/datainfo/schema';
+import type {Column} from '../lib/datainfo/schema';
 
-export interface State {
+export type State = {
 	datainfoFilename: string | undefined;
 	columns: Column[];
 	type: 'pk_oral' | 'pk_iv';
@@ -15,7 +16,7 @@ export interface State {
 	continuous: iSet<number>;
 	categoricalAll: readonly number[];
 	continuousAll: readonly number[];
-}
+};
 
 export const init = ({
 	dataInfo,
@@ -56,11 +57,11 @@ type UpdateAction = {
 	};
 }[keyof State];
 
-interface InitAction {
+type InitAction = {
 	type: 'init';
 	dataInfo?: File;
 	columns?: Column[];
-}
+};
 
 type Action = UpdateAction | InitAction;
 

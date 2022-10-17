@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {ParseMeta} from 'papaparse';
+import type {ParseMeta} from 'papaparse';
 
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -10,9 +10,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
-interface DatasetMetadataTableProps {
+type DatasetMetadataTableProps = {
 	meta: ParseMeta;
-}
+};
 
 function DatasetMetadataTable({meta}: DatasetMetadataTableProps) {
 	return (

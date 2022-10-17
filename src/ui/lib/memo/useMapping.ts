@@ -1,4 +1,5 @@
-import {DependencyList, useCallback, useEffect, useState} from 'react';
+import type {DependencyList} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
 const useMapping = <K, V>(map: (key: K) => V, deps?: DependencyList) => {
 	const [cache, setCache] = useState<Map<K, V>>(() => new Map());

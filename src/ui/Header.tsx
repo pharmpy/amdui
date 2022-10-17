@@ -15,9 +15,9 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import Breadcrumbs from './navigation/BreadCrumbs';
 import useMode from './theme/useMode';
 
-interface HeaderProps {
+type HeaderProps = {
 	path: string;
-}
+};
 
 function Header({path}: HeaderProps) {
 	const {

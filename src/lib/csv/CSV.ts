@@ -1,1 +1,1 @@
-export {ParseResult as default} from 'papaparse';
+export type {ParseResult as default} from 'papaparse';

@@ -1,4 +1,5 @@
-import React, {ChangeEventHandler, useState} from 'react';
+import type {ChangeEventHandler} from 'react';
+import React, {useState} from 'react';
 
 import Grid from '@mui/material/Grid';
 import Fab from '@mui/material/Fab';
@@ -10,14 +11,14 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import InputFileButton from '../lib/input/InputFileButton';
 import getCSV from '../../lib/csv/getCSV';
-import CSV from '../../lib/csv/CSV';
+import type CSV from '../../lib/csv/CSV';
 import useFile from '../../lib/file/useFile';
 import FileMetadataTable from './FileMetadataTable';
 import DatasetMetadataTable from './DatasetMetadataTable';
 import DatasetColumnConfiguration from './DatasetColumnConfiguration';
 import DatasetErrorsTable from './DatasetErrorsTable';
 import DatasetDataTable from './DatasetDataTable';
-import Row from './Row';
+import type Row from './Row';
 import Provider from './Provider';
 import useSave from './useSave';
 import useDataInfo from './useDataInfo';
@@ -25,11 +26,11 @@ import useDataInfo from './useDataInfo';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const useCSV = (file: File | undefined) => useFile<CSV<Row>>(file, getCSV);
 
-interface ConfigureDatasetConsumerProps {
+type ConfigureDatasetConsumerProps = {
 	dataset?: File;
 	csv?: CSV<Row>;
 	columns: string[];
-}
+};
 
 function ConfigureDatasetConsumer({
 	dataset,

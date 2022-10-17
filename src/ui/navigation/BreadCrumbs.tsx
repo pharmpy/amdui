@@ -9,10 +9,10 @@ import React from 'react';
 import isBrowser from '../../lib/env';
 import Link from './Link';
 
-interface BreadCrumb {
+type BreadCrumb = {
 	node: React.ReactNode;
 	path: string;
-}
+};
 
 const home: BreadCrumb = {
 	node: (
@@ -23,9 +23,9 @@ const home: BreadCrumb = {
 	path: '/',
 };
 
-interface BreadcrumbsProps {
+type BreadcrumbsProps = {
 	path: string;
-}
+};
 
 function Breadcrumbs({path}: BreadcrumbsProps) {
 	const parts = isBrowser ? path.split('/').filter((part) => part !== '') : [];

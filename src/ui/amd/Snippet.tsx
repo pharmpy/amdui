@@ -7,8 +7,8 @@ import Grid from '@mui/material/Grid';
 import HighlightGrammar from '../lib/text/HighlightGrammar';
 import useModel from '../model/useModel';
 import useSearch from '../search/useSearch';
-import {State as SearchState} from '../search/SearchContext';
-import {State as ModelState} from '../model/ModelContext';
+import type {State as SearchState} from '../search/SearchContext';
+import type {State as ModelState} from '../model/ModelContext';
 
 const languages = {
 	python: 'Python',
@@ -82,9 +82,7 @@ const snippet = (
 	switch (language) {
 		case 'bash':
 			// TODO Find out what the syntax is
-			return `pharmpy run ${
-				path === undefined ? '<filename>' : path
-			} amd --foo bar ..`;
+			return `pharmpy run ${path ?? '<filename>'} amd --foo bar ..`;
 		case 'python':
 			return join(
 				[

@@ -1,13 +1,13 @@
 import React from 'react';
 
-import {ParseError} from 'papaparse';
+import type {ParseError} from 'papaparse';
 
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 
-interface DatasetErrorsTableProps {
+type DatasetErrorsTableProps = {
 	errors: ParseError[];
-}
+};
 
 function DatasetErrorsTable({errors}: DatasetErrorsTableProps) {
 	return (

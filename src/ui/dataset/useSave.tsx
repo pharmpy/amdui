@@ -1,6 +1,6 @@
 import {useCallback} from 'react';
 import saveTextAs from '../lib/output/saveTextAs';
-import {State} from './Context';
+import type {State} from './Context';
 
 function useSave(state: State, filename: string) {
 	return useCallback(() => {

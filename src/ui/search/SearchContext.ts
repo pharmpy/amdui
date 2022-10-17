@@ -1,4 +1,5 @@
-import React, {createContext} from 'react';
+import type React from 'react';
+import {createContext} from 'react';
 
 import {Set as iSet} from 'immutable';
 
@@ -30,9 +31,9 @@ type UpdateAction = {
 	};
 }[keyof State];
 
-interface InitAction {
+type InitAction = {
 	type: 'init';
-}
+};
 
 type Action = UpdateAction | InitAction;
 

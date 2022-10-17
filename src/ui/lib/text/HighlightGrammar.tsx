@@ -20,10 +20,10 @@ SyntaxHighlighter.registerLanguage('python', python);
 SyntaxHighlighter.registerLanguage('bash', bash);
 SyntaxHighlighter.registerLanguage('r', r);
 
-interface Props {
+type Props = {
 	language: string;
 	word: string;
-}
+};
 
 const init = '';
 const success = 'Copied to clipboard';

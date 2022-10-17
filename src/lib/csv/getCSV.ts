@@ -1,5 +1,5 @@
 import {parse} from 'papaparse';
-import CSV from './CSV';
+import type CSV from './CSV';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const getCSV = async <T>(file: File): Promise<CSV<T>> => {

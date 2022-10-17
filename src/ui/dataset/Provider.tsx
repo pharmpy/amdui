@@ -2,14 +2,14 @@ import React, {useEffect, useMemo, useState} from 'react';
 
 import {OrderedMap as iOrderedMap} from 'immutable';
 
-import {PropsOf} from '@emotion/react/types/helper';
-import {Column, Type} from '../lib/datainfo/schema';
-import Context, {Dispatch, State} from './Context';
+import type {PropsOf} from '@emotion/react/types/helper';
+import type {Column, Type} from '../lib/datainfo/schema';
+import type {Dispatch, State} from './Context';
+import Context from './Context';
 
-interface ProviderProps
-	extends Omit<PropsOf<typeof Context.Provider>, 'value'> {
+type ProviderProps = {
 	columns: string[];
-}
+} & Omit<PropsOf<typeof Context.Provider>, 'value'>;
 
 const bestGuess = (_column: string): Type => {
 	return 'unknown';

@@ -1,6 +1,7 @@
-import React, {ChangeEvent} from 'react';
+import type {ChangeEvent} from 'react';
+import React from 'react';
 
-import {Set as iSet} from 'immutable';
+import type {Set as iSet} from 'immutable';
 
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
@@ -10,14 +11,14 @@ import FormHelperText from '@mui/material/FormHelperText';
 import FormLabel from '@mui/material/FormLabel';
 import useMapping from '../memo/useMapping';
 
-interface CheckboxesProps<T> {
+type CheckboxesProps<T> = {
 	title?: string;
 	options: readonly T[];
 	disabled?: iSet<T>;
 	checked: iSet<T>;
 	onChange: (checked: iSet<T>) => void;
 	helperText?: string;
-}
+};
 
 type InputChangeEvent = ChangeEvent<HTMLInputElement>;
 

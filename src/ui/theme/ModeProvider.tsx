@@ -1,11 +1,12 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {PropsOf} from '@emotion/react/types/helper';
-import {PaletteMode} from '@mui/material';
-import ModeContext, {Dispatch, State} from './ModeContext';
+import type {PropsOf} from '@emotion/react/types/helper';
+import type {PaletteMode} from '@mui/material';
+import type {Dispatch, State} from './ModeContext';
+import ModeContext from './ModeContext';
 import useNavigatorMode from './useNavigatorMode';
 
-interface ModeProviderProps
-	extends Omit<PropsOf<typeof ModeContext.Provider>, 'value'> {}
+type ModeProviderProps = Record<string, unknown> &
+	Omit<PropsOf<typeof ModeContext.Provider>, 'value'>;
 
 function ModeProvider(props: ModeProviderProps) {
 	const init = useNavigatorMode();

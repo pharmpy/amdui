@@ -1,23 +1,23 @@
-import {PropsOf} from '@emotion/react/types/helper';
-import TextField, {TextFieldProps} from '@mui/material/TextField';
+import type {PropsOf} from '@emotion/react/types/helper';
+import type {TextFieldProps} from '@mui/material/TextField';
+import TextField from '@mui/material/TextField';
 import React, {forwardRef} from 'react';
 
-import NumberFormat from 'react-number-format';
+import {NumericFormat} from 'react-number-format';
 
-interface CustomProps
-	extends Omit<
-		PropsOf<typeof NumberFormat>,
-		'getInputRef' | 'isNumericString' | 'onValueChange'
-	> {
+type CustomProps = {
 	onChange: (event: {target: {value: string}}) => void;
-}
+} & Omit<
+	PropsOf<typeof NumericFormat>,
+	'getInputRef' | 'isNumericString' | 'onValueChange'
+>;
 
-const NumberFormatCustom = forwardRef<typeof NumberFormat, CustomProps>(
+const NumberFormatCustom = forwardRef<typeof NumericFormat, CustomProps>(
 	({onChange, ...rest}, ref) => {
 		return (
-			<NumberFormat
+			<NumericFormat
 				{...rest}
-				isNumericString
+				valueIsNumericString
 				getInputRef={ref}
 				onValueChange={(values) => {
 					onChange({

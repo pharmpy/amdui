@@ -14,10 +14,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
+import type {Nature} from '../lib/datainfo/schema';
 import {
 	descriptors,
 	dtypes,
-	Nature,
 	nature,
 	scales,
 	types,
@@ -25,16 +25,16 @@ import {
 } from '../lib/datainfo/schema';
 import useDataInfo from './useDataInfo';
 
-interface DatasetColumnConfigurationProps {
+type DatasetColumnConfigurationProps = {
 	columns: string[];
-}
+};
 
-interface SelectOneInputProps<Option> {
+type SelectOneInputProps<Option> = {
 	options: readonly Option[];
 	label: string;
 	value: Option;
 	onChange: (value: Option) => void;
-}
+};
 
 function SelectOneInput<Option extends string | number>({
 	label,

@@ -1,14 +1,14 @@
 import React, {useEffect, useMemo, useReducer} from 'react';
 
-import {PropsOf} from '@emotion/react/types/helper';
+import type {PropsOf} from '@emotion/react/types/helper';
 import useFile from '../../lib/file/useFile';
-import {Column, DataInfo} from '../lib/datainfo/schema';
-import ModelContext, {Dispatch, reducer, State, init} from './ModelContext';
+import type {Column, DataInfo} from '../lib/datainfo/schema';
+import type {Dispatch, State} from './ModelContext';
+import ModelContext, {reducer, init} from './ModelContext';
 
-interface ProviderProps
-	extends Omit<PropsOf<typeof ModelContext.Provider>, 'value'> {
+type ProviderProps = {
 	dataInfo?: File;
-}
+} & Omit<PropsOf<typeof ModelContext.Provider>, 'value'>;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const loadJSON = async (file: File) =>

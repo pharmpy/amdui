@@ -7,9 +7,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
-interface TileProps {
+type TileProps = {
 	to: string;
-}
+};
 
 function Tile({to}: TileProps) {
 	return (
@@ -35,9 +35,9 @@ function Tile({to}: TileProps) {
 	);
 }
 
-interface TilesProps {
+type TilesProps = {
 	children: React.ReactNode;
-}
+};
 
 function Tiles({children}: TilesProps) {
 	return (

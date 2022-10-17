@@ -1,6 +1,8 @@
-import React, {createContext, SetStateAction} from 'react';
+import type {SetStateAction} from 'react';
+import type React from 'react';
+import {createContext} from 'react';
 
-import {PaletteMode} from '@mui/material';
+import type {PaletteMode} from '@mui/material';
 
 export type State = PaletteMode | undefined;
 
