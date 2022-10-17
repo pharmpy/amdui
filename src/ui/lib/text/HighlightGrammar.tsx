@@ -13,7 +13,8 @@ import r from 'react-syntax-highlighter/dist/esm/languages/prism/r';
 import bash from 'react-syntax-highlighter/dist/esm/languages/prism/bash';
 import dark from 'react-syntax-highlighter/dist/esm/styles/prism/material-dark';
 import light from 'react-syntax-highlighter/dist/esm/styles/prism/material-light';
-import {useTheme} from '@mui/material/styles';
+
+import useMode from '../../theme/useMode';
 import saveTextToClipboard from '../output/saveTextToClipboard';
 
 SyntaxHighlighter.registerLanguage('python', python);
@@ -60,9 +61,7 @@ const customStyle = {margin: 0, display: 'flex', flex: '1'};
 type Style = typeof dark | typeof light;
 
 function HighlightGrammar({language, word}: Props) {
-	const {
-		palette: {mode},
-	} = useTheme();
+	const mode = useMode();
 	const style: Style = mode === 'dark' ? dark : light;
 	const [tooltipText, setTooltipText] = useState<State>(init);
 	const [open, setOpen] = useState<boolean>(false);

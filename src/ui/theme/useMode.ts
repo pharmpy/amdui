@@ -1,6 +1,9 @@
 import {useContext} from 'react';
-import ModeContext from './ModeContext';
+import {useColorScheme} from '@mui/material/styles';
 
-const useMode = () => useContext(ModeContext);
+const useMode = () => {
+	const {mode: colorSchemeMode, systemMode} = useColorScheme();
+	return colorSchemeMode === 'system' ? systemMode : colorSchemeMode;
+};
 
 export default useMode;

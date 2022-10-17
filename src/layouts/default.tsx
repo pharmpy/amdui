@@ -7,10 +7,13 @@ import '@fontsource/roboto/700.css';
 
 import type {PropsOf} from '@emotion/react/types/helper';
 
-import {ThemeProvider} from '@mui/material/styles';
+import {
+	ThemeProvider,
+	Experimental_CssVarsProvider as CssVarsProvider,
+} from '@mui/material/styles';
+// eslint-disable-next-line import/no-unassigned-import
+import type {} from '@mui/material/themeCssVarsAugmentation';
 import CssBaseline from '@mui/material/CssBaseline';
-
-import ModeProvider from '../ui/theme/ModeProvider';
 
 import useTheme from '../ui/useTheme';
 import Header from '../ui/Header';
@@ -33,9 +36,9 @@ function Layout({path, ...rest}: LayoutProps) {
 
 function App(props: LayoutProps) {
 	return (
-		<ModeProvider>
+		<CssVarsProvider defaultMode="system">
 			<Layout {...props} />
-		</ModeProvider>
+		</CssVarsProvider>
 	);
 }
 
