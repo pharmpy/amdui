@@ -36,7 +36,7 @@ const searchSpace = (type: 'pk_iv' | 'pk_oral', search: SearchState) => {
 	);
 	// eslint-disable-next-line default-case
 	switch (type) {
-		case 'pk_iv':
+		case 'pk_iv': {
 			return join(
 				[
 					`ELIMINATION([${join(elimination, ',')}])`,
@@ -46,7 +46,12 @@ const searchSpace = (type: 'pk_iv' | 'pk_oral', search: SearchState) => {
 				],
 				';',
 			);
-		case 'pk_oral':
+		}
+
+		case 'pk_oral': {
+			const transits = search.absorptionDelayTransitsAll
+				.filter((transit) => search.absorptionDelayTransits.has(transit))
+				.map(String);
 			return join(
 				[
 					`ABSORPTION([${join(
@@ -57,18 +62,14 @@ const searchSpace = (type: 'pk_iv' | 'pk_oral', search: SearchState) => {
 					)}])`,
 					`ELIMINATION([${join(elimination, ',')}])`,
 					search.absorptionDelay.has('Lagtime') ? 'LAGTIME()' : '',
-					`TRANSITS([${join(
-						search.absorptionDelayTransitsAll
-							.filter((transit) => search.absorptionDelayTransits.has(transit))
-							.map(String),
-						',',
-					)}],*)`,
+					transits.length === 0 ? '' : `TRANSITS([${join(transits, ',')}],*)`,
 					peripherals.length === 0
 						? ''
 						: `PERIPHERALS([${join(peripherals, ',')}])`,
 				],
 				';',
 			);
+		}
 	}
 };
 
@@ -80,10 +81,12 @@ const snippet = (
 	const path = model.datainfoFilename?.replace(/\.[^.]+/, '.csv');
 	// eslint-disable-next-line default-case
 	switch (language) {
-		case 'bash':
+		case 'bash': {
 			// TODO Find out what the syntax is
 			return `pharmpy run ${path ?? '<filename>'} amd --foo bar ..`;
-		case 'python':
+		}
+
+		case 'python': {
 			return join(
 				[
 					`from pharmpy.modeling import run_amd\n`,
@@ -122,7 +125,9 @@ const snippet = (
 				],
 				'\n',
 			);
-		case 'r':
+		}
+
+		case 'r': {
 			return join(
 				[
 					`library(pharmr)\n`,
@@ -161,6 +166,7 @@ const snippet = (
 				],
 				'\n',
 			);
+		}
 	}
 };
 
