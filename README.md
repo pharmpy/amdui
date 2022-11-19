@@ -1,4 +1,6 @@
-# AMD UI - [demo](https://pharmpy.github.io/amdui)
+# AMD UI
+
+> [Try it now by clicking here!](https://pharmpy.github.io/amdui)
 
 Tools (client-side only, no backend):
   - [Gatsby](https://www.gatsbyjs.com)
