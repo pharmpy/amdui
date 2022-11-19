@@ -27,22 +27,45 @@ const join = (parts: string[], separator: string): string => {
 	return parts.filter((part: string) => part !== '').join(separator);
 };
 
-const searchSpace = (type: 'pk_iv' | 'pk_oral', search: SearchState) => {
+const searchSpace = (model: ModelState, search: SearchState) => {
 	const peripherals = search.distributionCompartmentsAll
 		.filter((x) => x !== 1 && search.distributionCompartments.has(x))
 		.map((x) => String(x - 1));
+
+	const peripheralsStatement =
+		peripherals.length === 0 ? '' : `PERIPHERALS([${join(peripherals, ',')}])`;
+
 	const elimination = search.eliminationAll.filter((elimination) =>
 		search.elimination.has(elimination),
 	);
+
+	const eliminationStatement = `ELIMINATION([${join(elimination, ',')}])`;
+
+	const categorical =
+		model.categorical.size === model.categoricalAll.length
+			? null
+			: model.categorical.map((index) => model.columns[index].name).toArray();
+
+	const letCategoricalStatement =
+		categorical === null ? '' : `LET(CATEGORICAL,[${join(categorical, ',')}])`;
+
+	const continuous =
+		model.continuous.size === model.continuousAll.length
+			? null
+			: model.continuous.map((index) => model.columns[index].name).toArray();
+
+	const letContinuousStatement =
+		continuous === null ? '' : `LET(CONTINUOUS,[${join(continuous, ',')}])`;
+
 	// eslint-disable-next-line default-case
-	switch (type) {
+	switch (model.type) {
 		case 'pk_iv': {
 			return join(
 				[
-					`ELIMINATION([${join(elimination, ',')}])`,
-					peripherals.length === 0
-						? ''
-						: `PERIPHERALS([${join(peripherals, ',')}])`,
+					eliminationStatement,
+					peripheralsStatement,
+					letCategoricalStatement,
+					letContinuousStatement,
 				],
 				';',
 			);
@@ -60,12 +83,12 @@ const searchSpace = (type: 'pk_iv' | 'pk_oral', search: SearchState) => {
 						),
 						',',
 					)}])`,
-					`ELIMINATION([${join(elimination, ',')}])`,
+					eliminationStatement,
 					search.absorptionDelay.has('Lagtime') ? 'LAGTIME()' : '',
 					transits.length === 0 ? '' : `TRANSITS([${join(transits, ',')}],*)`,
-					peripherals.length === 0
-						? ''
-						: `PERIPHERALS([${join(peripherals, ',')}])`,
+					peripheralsStatement,
+					letCategoricalStatement,
+					letContinuousStatement,
 				],
 				';',
 			);
@@ -89,7 +112,7 @@ const snippet = (
 		case 'python': {
 			return join(
 				[
-					`from pharmpy.modeling import run_amd\n`,
+					`from pharmpy.modeling import run_amd  # v0.85.0 or higher\n`,
 					'run_amd(',
 					join(
 						[
@@ -100,24 +123,8 @@ const snippet = (
 							model.type !== 'pk_oral' || Number.isNaN(model.popMat)
 								? ''
 								: `  mat_init=${model.popMat}`,
-							`  search_space=${JSON.stringify(
-								searchSpace(model.type, search),
-							)}`,
+							`  search_space=${JSON.stringify(searchSpace(model, search))}`,
 							Number.isNaN(model.lloq) ? '' : `  lloq=${model.lloq}`,
-							model.categorical.size === 0
-								? ''
-								: `  categorical=${JSON.stringify(
-										model.categorical
-											.map((index) => model.columns[index].name)
-											.toArray(),
-								  )}`,
-							model.continuous.size === 0
-								? ''
-								: `  continuous=${JSON.stringify(
-										model.continuous
-											.map((index) => model.columns[index].name)
-											.toArray(),
-								  )}`,
 						],
 						',\n',
 					),
@@ -130,7 +137,7 @@ const snippet = (
 		case 'r': {
 			return join(
 				[
-					`library(pharmr)\n`,
+					`library(pharmr)  # v0.85.0 or higher\n`,
 					'run_amd(',
 					join(
 						[
@@ -141,24 +148,8 @@ const snippet = (
 							model.type !== 'pk_oral' || Number.isNaN(model.popMat)
 								? ''
 								: `  mat_init=${model.popMat}`,
-							`  search_space=${JSON.stringify(
-								searchSpace(model.type, search),
-							)}`,
+							`  search_space=${JSON.stringify(searchSpace(model, search))}`,
 							Number.isNaN(model.lloq) ? '' : `  lloq=${model.lloq}`,
-							model.categorical.size === 0
-								? ''
-								: `  categorical=c(${JSON.stringify(
-										model.categorical
-											.map((index) => model.columns[index].name)
-											.toArray(),
-								  ).slice(1, -1)})`,
-							model.continuous.size === 0
-								? ''
-								: `  continuous=c(${JSON.stringify(
-										model.continuous
-											.map((index) => model.columns[index].name)
-											.toArray(),
-								  ).slice(1, -1)})`,
 						],
 						',\n',
 					),
