@@ -36,24 +36,34 @@ type State = typeof init | typeof success | typeof error;
 function CopyToClipboardIcon({state}: {state: State}) {
 	// eslint-disable-next-line default-case
 	switch (state) {
-		case init:
+		case init: {
 			return <ContentCopyIcon />;
-		case success:
+		}
+
+		case success: {
 			return <Check />;
-		case error:
+		}
+
+		case error: {
 			return <ErrorOutlineIcon />;
+		}
 	}
 }
 
 const copyToClipboardColor = (state: State) => {
 	// eslint-disable-next-line default-case
 	switch (state) {
-		case init:
+		case init: {
 			return undefined;
-		case success:
+		}
+
+		case success: {
 			return 'success';
-		case error:
+		}
+
+		case error: {
 			return 'error';
+		}
 	}
 };
 

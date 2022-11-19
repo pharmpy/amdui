@@ -1,6 +1,6 @@
 'use strict';
 
-const fs = require('fs');
+const fs = require('node:fs');
 
 const tc = (paths) => {
 	const encoding = 'utf8';

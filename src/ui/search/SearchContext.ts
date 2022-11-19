@@ -40,10 +40,13 @@ type Action = UpdateAction | InitAction;
 export const reducer = (state: State, action: Action) => {
 	// eslint-disable-next-line default-case
 	switch (action.type) {
-		case 'update':
+		case 'update': {
 			return {...state, [action.key]: action.value};
-		case 'init':
+		}
+
+		case 'init': {
 			return init();
+		}
 	}
 };
 
