@@ -87,7 +87,7 @@ function ConfigureDatasetConsumer({
 										setShowMetadata(false);
 									}}
 								>
-									hide
+									Hide
 								</Button>
 							</Typography>
 						) : (
