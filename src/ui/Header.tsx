@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {useTheme, useColorScheme} from '@mui/material/styles';
+import {useColorScheme} from '@mui/material/styles';
 
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,7 +16,6 @@ import SystemModeIcon from '@mui/icons-material/Brightness4';
 
 import useIsMounted from './lib/component/useIsMounted';
 import Breadcrumbs from './navigation/BreadCrumbs';
-import useMode from './theme/useMode';
 
 type HeaderProps = {
 	path: string;
