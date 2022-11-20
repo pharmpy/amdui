@@ -96,6 +96,8 @@ const searchSpace = (model: ModelState, search: SearchState) => {
 	}
 };
 
+const minimumSupportedVersion = 'v0.85.0';
+
 const snippet = (
 	language: Language,
 	model: ModelState,
@@ -112,7 +114,7 @@ const snippet = (
 		case 'python': {
 			return join(
 				[
-					`from pharmpy.modeling import run_amd  # v0.85.0 or higher\n`,
+					`from pharmpy.modeling import run_amd  # ${minimumSupportedVersion} or higher\n`,
 					'run_amd(',
 					join(
 						[
@@ -137,7 +139,7 @@ const snippet = (
 		case 'r': {
 			return join(
 				[
-					`library(pharmr)  # v0.85.0 or higher\n`,
+					`library(pharmr)  # ${minimumSupportedVersion} or higher\n`,
 					'run_amd(',
 					join(
 						[
