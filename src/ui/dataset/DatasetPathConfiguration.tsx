@@ -5,14 +5,19 @@ import TextField from '@mui/material/TextField';
 import useDataInfo from './useDataInfo';
 
 type DatasetPathConfigurationProps = {
+	disabled: boolean; // eslint-disable-line react/boolean-prop-naming
 	csvPath: string;
 };
 
-function DatasetPathConfiguration({csvPath}: DatasetPathConfigurationProps) {
+function DatasetPathConfiguration({
+	disabled,
+	csvPath,
+}: DatasetPathConfigurationProps) {
 	const [state, dispatch] = useDataInfo();
 	return (
 		<TextField
 			label="Path"
+			disabled={disabled}
 			placeholder={csvPath}
 			helperText="Relative to .datainfo directory"
 			value={state.path}

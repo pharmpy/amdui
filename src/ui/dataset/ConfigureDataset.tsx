@@ -14,9 +14,8 @@ import getCSV from '../../lib/csv/getCSV';
 import type CSV from '../../lib/csv/CSV';
 import useFile from '../../lib/file/useFile';
 import FileMetadataTable from './FileMetadataTable';
+import DatasetMetadataConfiguration from './DatasetMetadataConfiguration';
 import DatasetMetadataTable from './DatasetMetadataTable';
-import DatasetPathConfiguration from './DatasetPathConfiguration';
-import DatasetSeparatorConfiguration from './DatasetSeparatorConfiguration';
 import DatasetColumnConfiguration from './DatasetColumnConfiguration';
 import DatasetErrorsTable from './DatasetErrorsTable';
 import DatasetDataTable from './DatasetDataTable';
@@ -56,11 +55,6 @@ function ConfigureDatasetConsumer({
 				<SaveIcon />
 			</Fab>
 			<Grid container spacing={3} padding={3}>
-				{dataset === undefined ? null : (
-					<Grid item xs={12}>
-						<Typography variant="h3">{dataset.name}</Typography>
-					</Grid>
-				)}
 				{csv === undefined || csv.errors.length === 0 ? null : (
 					<Grid item xs={12}>
 						<DatasetErrorsTable errors={csv.errors} />
@@ -72,13 +66,11 @@ function ConfigureDatasetConsumer({
 					</Grid>
 				) : (
 					<>
-						<Grid item>
-							<DatasetPathConfiguration csvPath={dataset.name} />
+						<Grid item xs={12}>
+							<DatasetMetadataConfiguration dataset={dataset} csv={csv} />
 						</Grid>
-						<Grid item>
-							<DatasetSeparatorConfiguration
-								csvDelimiter={csv.meta.delimiter}
-							/>
+						<Grid item xs={12}>
+							<Typography variant="h3">Columns</Typography>
 						</Grid>
 						<Grid item xs={12}>
 							<DatasetColumnConfiguration columns={columns} />
@@ -89,7 +81,7 @@ function ConfigureDatasetConsumer({
 					<Grid item xs={12}>
 						{showMetadata ? (
 							<Typography variant="h3">
-								Metadata{' '}
+								Input file metadata{' '}
 								<Button
 									onClick={() => {
 										setShowMetadata(false);
@@ -104,7 +96,7 @@ function ConfigureDatasetConsumer({
 									setShowMetadata(true);
 								}}
 							>
-								Show metadata
+								Show input file metadata
 							</Button>
 						)}
 					</Grid>

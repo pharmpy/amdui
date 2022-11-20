@@ -9,6 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import useDataInfo from './useDataInfo';
 
 type DatasetSeparatorConfigurationProps = {
+	disabled: boolean; // eslint-disable-line react/boolean-prop-naming
 	csvDelimiter: string;
 };
 
@@ -38,6 +39,7 @@ const repr = (inputDelimiter: string, separator: string) => {
 };
 
 function DatasetSeparatorConfiguration({
+	disabled,
 	csvDelimiter,
 }: DatasetSeparatorConfigurationProps) {
 	const [state, dispatch] = useDataInfo();
@@ -50,6 +52,7 @@ function DatasetSeparatorConfiguration({
 			<Select
 				labelId="demo-simple-select-helper-label"
 				id="demo-simple-select-helper"
+				disabled={disabled}
 				value={state.separator}
 				label="Original dataset separator"
 				onChange={(event) => {
