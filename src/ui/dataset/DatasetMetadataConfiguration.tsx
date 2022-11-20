@@ -21,20 +21,20 @@ function DatasetMetadataConfiguration({
 	dataset,
 	csv,
 }: DatasetMetadataConfigurationProps) {
-	const [configurable, setConfigurable] = useState<boolean>(false);
+	const [editing, setEditing] = useState<boolean>(false);
 	return (
 		<Grid container spacing={3}>
 			<Grid item xs={12}>
 				<Typography variant="h3">
 					Dataset metadata{' '}
 					<Button
-						disabled={configurable}
+						disabled={editing}
 						startIcon={<EditIcon />}
 						onClick={() => {
-							setConfigurable(true);
+							setEditing(true);
 						}}
 					>
-						{configurable ? 'Editing' : 'Edit'}
+						{editing ? 'Editing' : 'Edit'}
 					</Button>
 				</Typography>
 				<Typography variant="subtitle2">
@@ -46,13 +46,13 @@ function DatasetMetadataConfiguration({
 					<Grid container spacing={2} padding={2}>
 						<Grid item>
 							<DatasetPathConfiguration
-								disabled={!configurable}
+								disabled={!editing}
 								csvPath={dataset.name}
 							/>
 						</Grid>
 						<Grid item>
 							<DatasetSeparatorConfiguration
-								disabled={!configurable}
+								disabled={!editing}
 								csvDelimiter={csv.meta.delimiter}
 							/>
 						</Grid>
