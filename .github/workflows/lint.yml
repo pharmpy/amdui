@@ -10,6 +10,11 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
 
+      - name: Select node version 🐢
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
       - name: Install 📦
         uses: bahmutov/npm-install@v1
         with:

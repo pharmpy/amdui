@@ -18,7 +18,7 @@ yarn dev
 
 ## :wrench: Setup `dev` environment
 
-Install [`node`](https://github.com/nodejs/node) `v16` or higher,
+Install [`node`](https://github.com/nodejs/node) `v18` or higher,
 [`npm`](https://github.com/npm/cli) `v8` or higher, and
 [`yarn`](https://classic.yarnpkg.com) `v1`.
 
