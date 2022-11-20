@@ -16,7 +16,7 @@ type DatasetSeparatorConfigurationProps = {
 const supportedDelimiter: readonly string[] = ['\\s+', ',', '\t'];
 
 const defaultComment: Record<string, string> = {
-	'\\s+': 'spaces', // eslint-disable-line @typescript-eslint/naming-convention
+	'\\s+': 'any amount of space', // eslint-disable-line @typescript-eslint/naming-convention
 	',': 'commas', // eslint-disable-line @typescript-eslint/naming-convention
 	'\t': 'tabs', // eslint-disable-line @typescript-eslint/naming-convention
 };
