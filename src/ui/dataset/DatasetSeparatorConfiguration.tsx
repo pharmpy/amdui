@@ -67,7 +67,7 @@ function DatasetSeparatorConfiguration({
 					);
 				})}
 			</Select>
-			<FormHelperText>Separator in run_amd dataset</FormHelperText>
+			<FormHelperText>Separator in dataset fed to run_amd</FormHelperText>
 		</FormControl>
 	);
 }

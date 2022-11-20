@@ -19,7 +19,7 @@ function DatasetPathConfiguration({
 			label="Path"
 			disabled={disabled}
 			placeholder={csvPath}
-			helperText="Relative to .datainfo directory"
+			helperText="Relative to .datainfo file's parent directory"
 			value={state.path}
 			onChange={(event) => {
 				dispatch('path')(event.target.value);
