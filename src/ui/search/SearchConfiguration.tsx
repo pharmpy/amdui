@@ -1,5 +1,6 @@
 import React, {useCallback} from 'react';
 
+import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Checkboxes from '../lib/input/Checkboxes';
 import useModel from '../model/useModel';
@@ -106,26 +107,37 @@ function Elimination() {
 export default function SearchConfiguration() {
 	const [state] = useModel();
 	return (
-		<Grid container spacing={2} padding={2}>
+		<Grid container spacing={2}>
+			<Grid item xs={12}>
+				<Paper sx={{display: 'flex'}}>
+					<Grid container spacing={2} padding={2}>
+						<Grid item xs={12} sm={6} md={4}>
+							<Distribution />
+						</Grid>
+						<Grid item xs={12} sm={6} md={4}>
+							<Elimination />
+						</Grid>
+					</Grid>
+				</Paper>
+			</Grid>
+
 			{state.type === 'pk_oral' && (
-				<>
-					<Grid item xs={12} sm={6} md={4}>
-						<AbsorptionRate />
-					</Grid>
-					<Grid item xs={12} sm={6} md={4}>
-						<AbsorptionDelay />
-					</Grid>
-					<Grid item xs={12} sm={6} md={4}>
-						<AbsorptionDelayTransits />
-					</Grid>
-				</>
+				<Grid item xs={12}>
+					<Paper sx={{display: 'flex'}}>
+						<Grid container spacing={2} padding={2}>
+							<Grid item xs={12} sm={6} md={4}>
+								<AbsorptionRate />
+							</Grid>
+							<Grid item xs={12} sm={6} md={4}>
+								<AbsorptionDelay />
+							</Grid>
+							<Grid item xs={12} sm={6} md={4}>
+								<AbsorptionDelayTransits />
+							</Grid>
+						</Grid>
+					</Paper>
+				</Grid>
 			)}
-			<Grid item xs={12} sm={6} md={4}>
-				<Distribution />
-			</Grid>
-			<Grid item xs={12} sm={6} md={4}>
-				<Elimination />
-			</Grid>
 		</Grid>
 	);
 }

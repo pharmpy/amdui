@@ -26,9 +26,7 @@ function RunAMDPage() {
 						</Paper>
 					</Grid>
 					<Grid item xs={6}>
-						<Paper sx={{display: 'flex'}}>
-							<SearchConfiguration />
-						</Paper>
+						<SearchConfiguration />
 					</Grid>
 					<Grid item xs={12}>
 						<Paper sx={{display: 'flex'}}>
