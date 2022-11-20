@@ -1,6 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {OrderedMap as iOrderedMap} from 'immutable';
+import mem from 'mem';
 
 import type {PropsOf} from '@emotion/react/types/helper';
 import type {Column, Type} from '../lib/datainfo/schema';
@@ -8,6 +9,8 @@ import type {Dispatch, State} from './Context';
 import Context from './Context';
 
 type ProviderProps = {
+	name: string;
+	delimiter: string;
 	columns: string[];
 } & Omit<PropsOf<typeof Context.Provider>, 'value'>;
 
@@ -26,12 +29,18 @@ const bestGuess = (_column: string): Type => {
 	// return 'covariate - continuous';
 };
 
-function Provider({columns, ...rest}: ProviderProps) {
-	const [state, setState] = useState<State>(iOrderedMap<string, Column>([]));
+function Provider({name, delimiter, columns, ...rest}: ProviderProps) {
+	const [state, setState] = useState<State>({
+		path: '',
+		separator: '',
+		columns: iOrderedMap<string, Column>([]),
+	});
 
 	useEffect(() => {
-		setState(
-			iOrderedMap<string, Column>(
+		setState({
+			path: name,
+			separator: delimiter,
+			columns: iOrderedMap<string, Column>(
 				columns.map((name) => [
 					name,
 					{
@@ -45,28 +54,44 @@ function Provider({columns, ...rest}: ProviderProps) {
 					} as const,
 				]),
 			),
-		);
-	}, [columns]);
+		});
+	}, [name, delimiter, columns]);
 
 	const dispatch = useMemo<Dispatch>(() => {
-		const cache = new Map<string, (value: any) => void>();
-		const dispatch: Dispatch = (name: string, key: keyof Column) => {
-			const cacheKey = JSON.stringify([name, key]);
-			const cached = cache.get(cacheKey);
-			if (cached !== undefined) return cached;
-			const cb = (value: Column[typeof key]) => {
-				setState((state) => {
-					const column = state.get(name);
-					if (column === undefined) throw new Error(`column ${name} missing`);
-					return state.set(name, {...column, [key]: value});
-				});
-			};
+		return mem(
+			(type, ...args) => {
+				// eslint-disable-next-line default-case
+				switch (type) {
+					case 'path': {
+						return (path: string) => {
+							setState((state) => ({...state, path}));
+						};
+					}
 
-			cache.set(cacheKey, cb);
-			return cb;
-		};
+					case 'separator': {
+						return (separator: string) => {
+							setState((state) => ({...state, separator}));
+						};
+					}
 
-		return dispatch;
+					case 'column': {
+						const [name, key] = args as [string, keyof Column];
+						return (value: Column[typeof key]) => {
+							setState((state) => {
+								const column = state.columns.get(name);
+								if (column === undefined)
+									throw new Error(`column ${name} missing`);
+								return {
+									...state,
+									columns: state.columns.set(name, {...column, [key]: value}),
+								};
+							});
+						};
+					}
+				}
+			},
+			{cacheKey: JSON.stringify},
+		) as Dispatch;
 	}, [setState]);
 
 	const value = useMemo<[State, Dispatch]>(

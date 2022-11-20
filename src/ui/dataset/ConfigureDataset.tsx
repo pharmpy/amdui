@@ -15,6 +15,8 @@ import type CSV from '../../lib/csv/CSV';
 import useFile from '../../lib/file/useFile';
 import FileMetadataTable from './FileMetadataTable';
 import DatasetMetadataTable from './DatasetMetadataTable';
+import DatasetPathConfiguration from './DatasetPathConfiguration';
+import DatasetSeparatorConfiguration from './DatasetSeparatorConfiguration';
 import DatasetColumnConfiguration from './DatasetColumnConfiguration';
 import DatasetErrorsTable from './DatasetErrorsTable';
 import DatasetDataTable from './DatasetDataTable';
@@ -48,7 +50,7 @@ function ConfigureDatasetConsumer({
 		<>
 			<Fab
 				sx={{position: 'fixed', bottom: 16, right: 16}}
-				disabled={state.size === 0}
+				disabled={state.columns.size === 0}
 				onClick={save}
 			>
 				<SaveIcon />
@@ -69,9 +71,19 @@ function ConfigureDatasetConsumer({
 						<Typography variant="h6">loading...</Typography>
 					</Grid>
 				) : (
-					<Grid item xs={12}>
-						<DatasetColumnConfiguration columns={columns} />
-					</Grid>
+					<>
+						<Grid item>
+							<DatasetPathConfiguration csvPath={dataset.name} />
+						</Grid>
+						<Grid item>
+							<DatasetSeparatorConfiguration
+								csvDelimiter={csv.meta.delimiter}
+							/>
+						</Grid>
+						<Grid item xs={12}>
+							<DatasetColumnConfiguration columns={columns} />
+						</Grid>
+					</>
 				)}
 				{dataset === undefined ? null : (
 					<Grid item xs={12}>
@@ -126,11 +138,13 @@ function ConfigureDataset() {
 		setDataset(event.target.files?.[0]);
 	};
 
-	const text = `Choose dataset${
-		dataset === undefined ? '' : ` (current: ${dataset.name})`
-	}`;
-
+	const name = dataset?.name ?? '';
+	const delimiter = csv?.meta.delimiter ?? '';
 	const columns = csv?.meta.fields ?? [];
+
+	const text = `Choose dataset${
+		dataset === undefined ? '' : ` (current: ${name})`
+	}`;
 
 	return (
 		<>
@@ -144,7 +158,7 @@ function ConfigureDataset() {
 					{text}
 				</Fab>
 			</InputFileButton>
-			<Provider columns={columns}>
+			<Provider name={name} delimiter={delimiter} columns={columns}>
 				<ConfigureDatasetConsumer
 					dataset={dataset}
 					columns={columns}

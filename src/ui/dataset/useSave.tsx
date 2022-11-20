@@ -4,11 +4,13 @@ import type {State} from './Context';
 
 function useSave(state: State, filename: string) {
 	return useCallback(() => {
-		if (state.size === 0) return;
+		if (state.columns.size === 0) return;
 		const text = JSON.stringify(
 			{
+				path: state.path,
+				separator: state.separator,
 				columns: Array.from(
-					state.values(),
+					state.columns.values(),
 					({continuous, categories, descriptor, drop, ...rest}) => ({
 						...rest,
 						continuous: continuous ? undefined : false,
