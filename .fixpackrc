@@ -17,6 +17,7 @@
     "homepage",
     "repository",
     "bugs",
+    "engines",
     "sideEffects",
     "type",
     "source",

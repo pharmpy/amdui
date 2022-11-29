@@ -12,6 +12,10 @@
   "bugs": {
     "url": "https://github.com/pharmpy/amdui/issues"
   },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
   "scripts": {
     "build": "gatsby build",
     "clean": "gatsby clean",
