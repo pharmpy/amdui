@@ -29,8 +29,9 @@ type BreadcrumbsProps = {
 
 function Breadcrumbs({path}: BreadcrumbsProps) {
 	const parts = isBrowser ? path.split('/').filter((part) => part !== '') : [];
-	const breadcrumbs = [home].concat(
-		parts.map((part, index) => {
+	const breadcrumbs = [
+		home,
+		...parts.map((part, index) => {
 			const isLast = index === parts.length - 1;
 			return {
 				node: (
@@ -43,7 +44,7 @@ function Breadcrumbs({path}: BreadcrumbsProps) {
 				path: '/' + parts.slice(0, index + 1).join('/'),
 			};
 		}),
-	);
+	];
 	return (
 		<MuiBreadcrumbs
 			separator={<NavigateNextIcon fontSize="small" />}

@@ -9,8 +9,7 @@ function useSave(state: State, filename: string) {
 			{
 				path: state.path,
 				separator: state.separator,
-				columns: Array.from(
-					state.columns.values(),
+				columns: [...state.columns.values()].map(
 					({continuous, categories, descriptor, drop, ...rest}) => ({
 						...rest,
 						continuous: continuous ? undefined : false,

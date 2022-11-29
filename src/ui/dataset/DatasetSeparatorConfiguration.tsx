@@ -45,7 +45,7 @@ function DatasetSeparatorConfiguration({
 	const [state, dispatch] = useDataInfo();
 	const delimiters = supportedDelimiter.includes(csvDelimiter)
 		? supportedDelimiter
-		: [csvDelimiter].concat(supportedDelimiter);
+		: [csvDelimiter, ...supportedDelimiter];
 	return (
 		<FormControl>
 			<InputLabel id="demo-simple-select-helper-label">Separator</InputLabel>
