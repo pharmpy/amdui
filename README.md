@@ -17,6 +17,11 @@ Install [`node`](https://github.com/nodejs/node) `v18` or higher,
 
 > :warning: Note that `npm` is included in most distributions of `node`.
 
+> :bulb: If your distribution does not come with the correct `node` version,
+> one solution is to
+> [install `nvm`](https://github.com/nvm-sh/nvm#installing-and-updating)
+> and then run `nvm use` inside the repository clone for every new shell.
+
 ```shell
 # Install dependencies and setup git hooks
 yarn
@@ -46,6 +51,10 @@ yarn cu
 ```shell
 yarn up
 ```
+
+Then run `yarn` to update `yarn.lock` and local `node_modules`. Commit both
+changes to `package.json` and `yarn.lock`. If you want to start fresh, remove
+`yarn.lock` and `node_modules`, then run `yarn`.
 
 ## :building_construction: Production build
 
