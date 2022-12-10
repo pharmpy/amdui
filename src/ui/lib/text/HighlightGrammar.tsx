@@ -14,8 +14,6 @@ import bash from 'react-syntax-highlighter/dist/esm/languages/prism/bash';
 import dark from 'react-syntax-highlighter/dist/esm/styles/prism/material-dark';
 import light from 'react-syntax-highlighter/dist/esm/styles/prism/material-light';
 
-import useMode from '../../theme/useMode';
-import useIsMounted from '../component/useIsMounted';
 import saveTextToClipboard from '../output/saveTextToClipboard';
 
 SyntaxHighlighter.registerLanguage('python', python);
@@ -69,13 +67,21 @@ const copyToClipboardColor = (state: State) => {
 
 const customStyle = {margin: 0, display: 'flex', flex: '1'};
 
-type Style = typeof dark | typeof light;
+function prefixKeys<T>(
+	prefix: string,
+	record: Record<string, T>,
+): Record<string, T> {
+	return Object.fromEntries(
+		Object.entries(record).map(([k, v]) => [prefix + k, v]),
+	);
+}
+
+const style = {
+	...prefixKeys('html[data-mui-color-scheme="dark"] ', dark),
+	...light,
+};
 
 function HighlightGrammar({language, word}: Props) {
-	const isMounted = useIsMounted();
-
-	const mode = useMode();
-	const style: Style = mode === 'dark' ? dark : light;
 	const [tooltipText, setTooltipText] = useState<State>(init);
 	const [open, setOpen] = useState<boolean>(false);
 	const handleOpen = () => {
@@ -90,11 +96,6 @@ function HighlightGrammar({language, word}: Props) {
 		setTooltipText(init);
 		setOpen(false);
 	}, [language, word]);
-
-	if (!isMounted()) {
-		// NOTE We cannot highlight with the correct mode on the server
-		return null;
-	}
 
 	return (
 		<Paper variant="outlined" sx={{display: 'flex', position: 'relative'}}>
